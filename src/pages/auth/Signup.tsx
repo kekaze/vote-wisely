@@ -7,12 +7,36 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    full_name: "",
+    email: "",
+    password: "",
+    confirm_password: ""
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate loading
-    setTimeout(() => setIsLoading(false), 1500);
+    
+    const signupParameters = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    };
+
+    fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/api/v1/Auth/Signup`, signupParameters)
+      .then(async response => {
+        setIsLoading(false)
+        if(!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || `Error ${response.status}: ${response.statusText}`);
+        }
+        return response.json()
+      })
   };
 
   return (
@@ -37,6 +61,9 @@ const Signup = () => {
                   placeholder="Enter your full name"
                   className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-ph-blue/20 focus:border-ph-blue/20"
                   required
+                  name="full_name"
+                  value={formData.full_name}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -53,6 +80,9 @@ const Signup = () => {
                   placeholder="Enter your email"
                   className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-ph-blue/20 focus:border-ph-blue/20"
                   required
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -69,6 +99,9 @@ const Signup = () => {
                   placeholder="Create a password"
                   className="w-full pl-10 pr-12 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-ph-blue/20 focus:border-ph-blue/20"
                   required
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
                 />
                 <button
                   type="button"
@@ -96,6 +129,9 @@ const Signup = () => {
                   placeholder="Confirm your password"
                   className="w-full pl-10 pr-12 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-ph-blue/20 focus:border-ph-blue/20"
                   required
+                  name="confirm_password"
+                  value={formData.confirm_password}
+                  onChange={handleChange}
                 />
                 <button
                   type="button"
