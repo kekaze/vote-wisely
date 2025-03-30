@@ -6,12 +6,34 @@ import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate loading
-    setTimeout(() => setIsLoading(false), 1500);
+
+    const loginParameters = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    };
+
+    fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/api/v1/Auth/Login`, loginParameters)
+      .then(async response => {
+        setIsLoading(false)
+        if(!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || `Error ${response.status}: ${response.statusText}`);
+        }
+        return response.json()
+      })
   };
 
   return (
@@ -33,9 +55,12 @@ const Login = () => {
                 <input
                   id="email"
                   type="email"
+                  name="email"
                   placeholder="Enter your email"
                   className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-ph-blue/20 focus:border-ph-blue/20"
                   required
+                  value={formData.email}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -49,9 +74,12 @@ const Login = () => {
                 <input
                   id="password"
                   type={showPassword ? "text" : "password"}
+                  name="password"
                   placeholder="Enter your password"
                   className="w-full pl-10 pr-12 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-ph-blue/20 focus:border-ph-blue/20"
                   required
+                  value={formData.password}
+                  onChange={handleChange}
                 />
                 <button
                   type="button"
