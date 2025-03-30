@@ -72,11 +72,38 @@ const Preferences = () => {
       return;
     }
     
-    setIsLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      navigate("/results", { state: { preferences: selectedPreferences } });
-    }, 1500);
+    // setIsLoading(true);
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        "against": [
+            "Contractualization"
+        ],
+        "platforms":[
+            "Free Education"
+        ]
+      })
+    };
+
+    fetch("https://localhost:7017/api/v1/EmbeddingSearch/similarity-search", requestOptions)
+      .then(async response => {
+        if(!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || `Error ${response.status}: ${response.statusText}`);
+        }
+        return response.json()
+      })
+      .then(() => {
+        setTimeout(() => {
+          navigate("/results", { state: { preferences: selectedPreferences } });
+        }, 1500);
+      })
+      .catch (error => {
+        toast.error(`Failed to process your request: ${error.message}`);
+        return;
+      })
+
   };
 
   return (
