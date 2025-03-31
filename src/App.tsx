@@ -1,7 +1,6 @@
 
 import { Toaster } from 'sonner'
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
@@ -10,10 +9,7 @@ import Preferences from "./pages/Preferences";
 import Results from "./pages/Results";
 import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
-
 const App = () => (
-  <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster richColors />
       <BrowserRouter>
@@ -28,7 +24,6 @@ const App = () => (
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
-  </QueryClientProvider>
 );
 
 export default App;
