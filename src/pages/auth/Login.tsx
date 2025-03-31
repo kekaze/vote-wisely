@@ -40,9 +40,9 @@ const Login = () => {
         localStorage.setItem('token', data.token);
         navigate('/dashboard');
       })
-      .catch(error => {
+      .catch(() => {
         setIsLoading(false);
-        toast.error(error.message || 'Failed to login. Please try again.');
+        toast.error('Failed to login. Please try again.');
       });
   };
 

@@ -44,9 +44,9 @@ const Signup = () => {
         localStorage.setItem('token', data.token);
         toast.success('We\'ve sent an email confirmation to your email address');
       })
-      .catch(error => {
+      .catch(() => {
         setIsLoading(false);
-        toast.error(error.message || 'Failed to login. Please try again.');
+        toast.error('Failed to signup. Please try again.');
       });
   };
 
