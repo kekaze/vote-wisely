@@ -1,9 +1,10 @@
-
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { toast } from "sonner";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -30,10 +31,19 @@ const Login = () => {
         setIsLoading(false)
         if(!response.ok) {
           const errorData = await response.json();
+          toast.error(errorData.message || `Error ${response.status}: ${response.statusText}`);
           throw new Error(errorData.message || `Error ${response.status}: ${response.statusText}`);
         }
         return response.json()
       })
+      .then(data => {
+        localStorage.setItem('token', data.token);
+        navigate('/dashboard');
+      })
+      .catch(error => {
+        setIsLoading(false);
+        toast.error(error.message || 'Failed to login. Please try again.');
+      });
   };
 
   return (
