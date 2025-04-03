@@ -41,7 +41,7 @@ const Signup = () => {
         return response.json()
       })
       .then(data => {
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('auth_token', data.token);
         toast.success('We\'ve sent an email confirmation to your email address');
       })
       .catch(error => {
