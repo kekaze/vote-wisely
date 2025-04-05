@@ -37,7 +37,7 @@ const Login = () => {
         return response.json()
       })
       .then(data => {
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('auth_token', data.token);
         navigate('/dashboard');
       })
       .catch(() => {
