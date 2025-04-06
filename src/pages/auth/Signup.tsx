@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
@@ -27,26 +26,25 @@ const Signup = () => {
     const signupParameters = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include' as RequestCredentials,
       body: JSON.stringify(formData)
     };
 
     fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/api/v1/Auth/Signup`, signupParameters)
       .then(async response => {
         setIsLoading(false)
+        const data = await response.json();
         if(!response.ok) {
-          const errorData = await response.json();
-          toast.error(errorData.message || `Error ${response.status}: ${response.statusText}`);
-          throw new Error(errorData.message || `Error ${response.status}: ${response.statusText}`);
+          throw new Error(data.message);
         }
-        return response.json()
+        return data;
       })
-      .then(data => {
-        localStorage.setItem('auth_token', data.token);
+      .then(() => {
         toast.success('We\'ve sent an email confirmation to your email address');
       })
-      .catch(() => {
+      .catch((error) => {
         setIsLoading(false);
-        toast.error('Failed to signup. Please try again.');
+        toast.error(error.message);
       });
   };
 
