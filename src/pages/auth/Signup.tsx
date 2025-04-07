@@ -32,15 +32,14 @@ const Signup = () => {
 
     fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/api/v1/Auth/Signup`, signupParameters)
       .then(async response => {
-        setIsLoading(false)
-        const data = await response.json();
         if(!response.ok) {
+          const data = await response.json();
           throw new Error(data.message);
         }
-        return data;
+        setIsLoading(false)
       })
       .then(() => {
-        toast.success('We\'ve sent an email confirmation to your email address');
+        navigate('/email-confirmation');
       })
       .catch((error) => {
         setIsLoading(false);

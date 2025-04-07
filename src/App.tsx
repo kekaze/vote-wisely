@@ -1,9 +1,9 @@
-
 import { Toaster } from 'sonner'
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
+import EmailConfirmation from "./pages/auth/EmailConfirmation";
 import Dashboard from "./pages/Dashboard";
 import Preferences from "./pages/Preferences";
 import Results from "./pages/Results";
@@ -17,6 +17,7 @@ const App = () => (
         <Routes>
           <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
           <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
+          <Route path="/email-confirmation" element={<PublicRoute><EmailConfirmation /></PublicRoute>} />
 
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/preferences" element={<ProtectedRoute><Preferences /></ProtectedRoute>} />
