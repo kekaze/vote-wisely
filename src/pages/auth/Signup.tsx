@@ -26,7 +26,6 @@ const Signup = () => {
     const signupParameters = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      credentials: 'include' as RequestCredentials,
       body: JSON.stringify(formData)
     };
 

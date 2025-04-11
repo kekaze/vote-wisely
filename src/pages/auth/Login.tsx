@@ -23,26 +23,25 @@ const Login = () => {
     const loginParameters = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include' as RequestCredentials,
       body: JSON.stringify(formData)
     };
 
     fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/api/v1/Auth/Login`, loginParameters)
       .then(async response => {
-        setIsLoading(false)
+        console.log(response);
         if(!response.ok) {
-          const errorData = await response.json();
-          toast.error(errorData.message || `Error ${response.status}: ${response.statusText}`);
-          throw new Error(errorData.message || `Error ${response.status}: ${response.statusText}`);
+          const data = await response.json();
+          throw new Error(data.message);
         }
-        return response.json()
+        setIsLoading(false)
       })
-      .then(data => {
-        localStorage.setItem('auth_token', data.token);
+      .then(() => {
         navigate('/dashboard');
       })
-      .catch(() => {
+      .catch((error) => {
         setIsLoading(false);
-        toast.error('Failed to login. Please try again.');
+        toast.error(`Failed to login: ${error.message}`);
       });
   };
 
