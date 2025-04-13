@@ -21,7 +21,7 @@ const App = () => (
 
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/select-criteria" element={<ProtectedRoute><CriteriaSelection /></ProtectedRoute>} />
-          <Route path="/results" element={<ProtectedRoute><Results /></ProtectedRoute>} />
+          <Route path="/result" element={<ProtectedRoute><Results /></ProtectedRoute>} />
 
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="*" element={<NotFound />} />

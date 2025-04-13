@@ -52,7 +52,7 @@ const Results = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           <button
-            onClick={() => navigate("/preferences")}
+            onClick={() => navigate("/select-criteria")}
             className="flex items-center text-gray-600 hover:text-gray-900 mb-6 group"
           >
             <ArrowLeft className="h-4 w-4 mr-2 transition-transform group-hover:-translate-x-1" />
