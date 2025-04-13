@@ -16,7 +16,7 @@ const Dashboard = () => {
 
           <div className="grid gap-6 md:grid-cols-2 animate-fade-in" style={{ animationDelay: "0.1s" }}>
             <Link
-              to="/preferences"
+              to="/select-criteria"
               className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:border-ph-blue/20 hover:shadow-md transition-all group"
             >
               <div className="flex items-start space-x-4">

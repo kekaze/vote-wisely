@@ -53,7 +53,7 @@ const preferences: Preference[] = [
   },
 ];
 
-const Preferences = () => {
+const CriteriaSelection = () => {
   const navigate = useNavigate();
   const [selectedPreferences, setSelectedPreferences] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -213,4 +213,4 @@ const Preferences = () => {
   );
 };
 
-export default Preferences;
+export default CriteriaSelection;
