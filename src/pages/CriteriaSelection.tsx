@@ -4,13 +4,11 @@ import { ArrowLeft, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 
 interface Criteria {
-  id: string;
   title: string;
   description: string;
 }
 
 interface Platform {
-  id: string;
   title: string;
   description: string;
 }
@@ -23,42 +21,34 @@ interface SelectedCriteria {
 
 const preferences: Criteria[] = [
   {
-    id: "anti-contractualization",
     title: "Against Contractualization",
     description: "Support ending the practice of contractualization in employment",
   },
   {
-    id: "pogo-ban",
     title: "POGO Ban",
     description: "Support banning Philippine Offshore Gaming Operators",
   },
   {
-    id: "death-penalty",
     title: "Death Penalty",
     description: "Support reinstating capital punishment",
   },
   {
-    id: "divorce-law",
     title: "Divorce Law",
     description: "Support legalizing divorce in the Philippines",
   },
   {
-    id: "same-sex-marriage",
     title: "Same-Sex Marriage",
     description: "Support legalizing same-sex marriage",
   },
   {
-    id: "anti-dynasty",
     title: "Anti-Dynasty Law",
     description: "Support limiting political dynasties",
   },
   {
-    id: "federalism",
     title: "Federalism",
     description: "Support shifting to a federal form of government",
   },
   {
-    id: "nuclear-energy",
     title: "Nuclear Energy",
     description: "Support developing nuclear energy in the Philippines",
   },
@@ -66,32 +56,26 @@ const preferences: Criteria[] = [
 
 const platforms: Platform[] = [
   {
-    id: "free-education",
     title: "Free Education",
     description: "Support for free education at all levels",
   },
   {
-    id: "universal-healthcare",
     title: "Universal Healthcare",
     description: "Support for comprehensive healthcare coverage for all citizens",
   },
   {
-    id: "infrastructure",
     title: "Infrastructure Development",
     description: "Focus on improving transportation and public works",
   },
   {
-    id: "job-creation",
     title: "Job Creation",
     description: "Policies focused on creating employment opportunities",
   },
   {
-    id: "environment",
     title: "Environmental Protection",
     description: "Strong environmental policies and climate action",
   },
   {
-    id: "digital-transformation",
     title: "Digital Transformation",
     description: "Modernization of government services and digital infrastructure",
   }
@@ -184,9 +168,9 @@ const CriteriaSelection = () => {
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Political Stances</h2>
             <p className="text-gray-600 mb-4">Select your position on these political issues.</p>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {preferences.map((preference) => (
+              {preferences.map((preference, index) => (
                 <div
-                  key={preference.id}
+                  key={`criteria-${index}`}
                   className="bg-white p-4 rounded-lg shadow-sm border border-gray-100"
                 >
                   <div className="flex items-start space-x-3">
@@ -227,9 +211,9 @@ const CriteriaSelection = () => {
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Platforms</h2>
             <p className="text-gray-600 mb-4">Select the platforms that matter most to you.</p>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {platforms.map((platform) => (
+              {platforms.map((platform, index) => (
                 <div
-                  key={platform.id}
+                  key={`platform-${index}`}
                   className={`bg-white p-4 rounded-lg shadow-sm border cursor-pointer transition-all ${
                     selectedPreferences.platforms.includes(platform.title)
                       ? "border-ph-blue ring-1 ring-ph-blue/20"
