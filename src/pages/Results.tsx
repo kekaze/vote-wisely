@@ -1,7 +1,7 @@
-
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Share2, Facebook } from "lucide-react";
 import { toast } from "sonner";
+import { useEffect } from "react";
 
 interface Candidate {
   id: string;
@@ -40,7 +40,14 @@ const candidates: Candidate[] = [
 const Results = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const preferences = location.state?.preferences || [];
+  const { reference } = useParams();
+  let { preferences, data } = location.state || {};
+
+  if (!preferences || !data) {
+    // Request preferences and data from server
+  }
+
+  const resultData = JSON.parse(data);
 
   const handleShare = (platform: "facebook-feed" | "facebook-story") => {
     // In a real app, implement sharing functionality
@@ -52,11 +59,11 @@ const Results = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           <button
-            onClick={() => navigate("/select-criteria")}
+            onClick={() => navigate("/dashboard")}
             className="flex items-center text-gray-600 hover:text-gray-900 mb-6 group"
           >
             <ArrowLeft className="h-4 w-4 mr-2 transition-transform group-hover:-translate-x-1" />
-            Back to Preferences
+            Back to Dashboard
           </button>
 
           <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 mb-6 animate-fade-in">

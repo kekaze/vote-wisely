@@ -135,7 +135,12 @@ const CriteriaSelection = () => {
         }
 
         setIsLoading(false);
-        navigate("/result", { state: { preferences: selectedPreferences, data: data } });
+        navigate(`/result/${data.reference}`, { 
+          state: { 
+            preferences: selectedPreferences, 
+            data: data.result
+          } 
+        });
       })
       .catch (error => {
         setIsLoading(false);
