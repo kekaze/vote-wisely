@@ -1,16 +1,27 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 
-interface Preference {
+interface Criteria {
   id: string;
   title: string;
   description: string;
 }
 
-const preferences: Preference[] = [
+interface Platform {
+  id: string;
+  title: string;
+  description: string;
+}
+
+interface SelectedCriteria {
+  in_favor: string[];
+  against: string[];
+  platforms: string[];
+}
+
+const preferences: Criteria[] = [
   {
     id: "anti-contractualization",
     title: "Against Contractualization",
@@ -53,57 +64,100 @@ const preferences: Preference[] = [
   },
 ];
 
+const platforms: Platform[] = [
+  {
+    id: "free-education",
+    title: "Free Education",
+    description: "Support for free education at all levels",
+  },
+  {
+    id: "universal-healthcare",
+    title: "Universal Healthcare",
+    description: "Support for comprehensive healthcare coverage for all citizens",
+  },
+  {
+    id: "infrastructure",
+    title: "Infrastructure Development",
+    description: "Focus on improving transportation and public works",
+  },
+  {
+    id: "job-creation",
+    title: "Job Creation",
+    description: "Policies focused on creating employment opportunities",
+  },
+  {
+    id: "environment",
+    title: "Environmental Protection",
+    description: "Strong environmental policies and climate action",
+  },
+  {
+    id: "digital-transformation",
+    title: "Digital Transformation",
+    description: "Modernization of government services and digital infrastructure",
+  }
+];
+
 const CriteriaSelection = () => {
   const navigate = useNavigate();
-  const [selectedPreferences, setSelectedPreferences] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedPreferences, setSelectedPreferences] = useState<SelectedCriteria>({
+    in_favor: [],
+    against: [],
+    platforms: []
+  });
 
-  const togglePreference = (id: string) => {
-    setSelectedPreferences((prev) =>
-      prev.includes(id)
-        ? prev.filter((p) => p !== id)
-        : [...prev, id]
-    );
+  const togglePreference = (title: string, category: keyof SelectedCriteria) => {
+    setSelectedPreferences((prev) => {
+      const criteria = { ...prev };
+      
+      if (category === "in_favor" || category === "against") {
+        const otherCategory = category === "in_favor" ? "against" : "in_favor";
+        criteria[otherCategory] = criteria[otherCategory].filter(p => p !== title);
+      }
+      
+      criteria[category] = criteria[category].includes(title)
+        ? criteria[category].filter((p) => p !== title)
+        : [...criteria[category], title];
+      
+      return criteria;
+    });
   };
 
   const handleSubmit = () => {
-    if (selectedPreferences.length < 3) {
+    const totalSelected = Object.values(selectedPreferences).reduce(
+      (sum, arr) => sum + arr.length,
+      0
+    );
+    
+    if (totalSelected < 3) {
       toast.error("Please select at least 3 preferences");
       return;
     }
     
-    // setIsLoading(true);
+    setIsLoading(true);
+
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        "against": [
-            "Contractualization"
-        ],
-        "platforms":[
-            "Free Education"
-        ]
-      })
+      credentials: 'include' as RequestCredentials,
+      body: JSON.stringify(selectedPreferences)
     };
 
     fetch("https://localhost:7017/api/v1/EmbeddingSearch/similarity-search", requestOptions)
       .then(async response => {
         if(!response.ok) {
           const errorData = await response.json();
-          throw new Error(errorData.message || `Error ${response.status}: ${response.statusText}`);
+          throw new Error(errorData.message);
         }
-        return response.json()
-      })
-      .then(() => {
-        setTimeout(() => {
-          navigate("/results", { state: { preferences: selectedPreferences } });
-        }, 1500);
+
+        setIsLoading(false);
+        navigate("/results", { state: { preferences: selectedPreferences } });
       })
       .catch (error => {
+        setIsLoading(false);
         toast.error(`Failed to process your request: ${error.message}`);
         return;
       })
-
   };
 
   return (
@@ -121,52 +175,100 @@ const CriteriaSelection = () => {
           <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 mb-6 animate-fade-in">
             <h1 className="text-2xl font-semibold text-gray-900 mb-2">Select Your Preferences</h1>
             <p className="text-gray-600">
-              Choose at least 3 political issues that matter most to you.
+              Choose your political stances and preferred platforms.
             </p>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-            {preferences.map((preference) => (
-              <div
-                key={preference.id}
-                className={`bg-white p-4 rounded-lg shadow-sm border cursor-pointer transition-all ${
-                  selectedPreferences.includes(preference.id)
-                    ? "border-ph-blue ring-1 ring-ph-blue/20"
-                    : "border-gray-100 hover:border-ph-blue/20"
-                }`}
-                onClick={() => togglePreference(preference.id)}
-              >
-                <div className="flex items-start space-x-3">
-                  <div
-                    className={`w-5 h-5 rounded border-2 mt-0.5 flex-shrink-0 transition-colors ${
-                      selectedPreferences.includes(preference.id)
-                        ? "bg-ph-blue border-ph-blue"
-                        : "border-gray-300"
-                    }`}
-                  >
-                    {selectedPreferences.includes(preference.id) && (
-                      <svg
-                        className="w-4 h-4 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                    )}
+          {/* Political Stances Section */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 mb-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">Political Stances</h2>
+            <p className="text-gray-600 mb-4">Select your position on these political issues.</p>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {preferences.map((preference) => (
+                <div
+                  key={preference.id}
+                  className="bg-white p-4 rounded-lg shadow-sm border border-gray-100"
+                >
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-1">
+                      <h3 className="font-medium text-gray-900">{preference.title}</h3>
+                      <p className="text-sm text-gray-600 mt-1">{preference.description}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-medium text-gray-900">{preference.title}</h3>
-                    <p className="text-sm text-gray-600 mt-1">{preference.description}</p>
+                  <div className="mt-4 flex gap-2">
+                    <button
+                      onClick={() => togglePreference(preference.title, "in_favor")}
+                      className={`px-3 py-1 text-sm rounded-full transition-colors ${
+                        selectedPreferences.in_favor.includes(preference.title)
+                          ? "bg-ph-blue text-white"
+                          : "bg-gray-100 text-gray-600 hover:bg-ph-blue/10"
+                      }`}
+                    >
+                      In Favor
+                    </button>
+                    <button
+                      onClick={() => togglePreference(preference.title, "against")}
+                      className={`px-3 py-1 text-sm rounded-full transition-colors ${
+                        selectedPreferences.against.includes(preference.title)
+                          ? "bg-ph-red text-white"
+                          : "bg-gray-100 text-gray-600 hover:bg-ph-red/10"
+                      }`}
+                    >
+                      Against
+                    </button>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
+
+          {/* Platforms Section */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 mb-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">Platforms</h2>
+            <p className="text-gray-600 mb-4">Select the platforms that matter most to you.</p>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {platforms.map((platform) => (
+                <div
+                  key={platform.id}
+                  className={`bg-white p-4 rounded-lg shadow-sm border cursor-pointer transition-all ${
+                    selectedPreferences.platforms.includes(platform.title)
+                      ? "border-ph-blue ring-1 ring-ph-blue/20"
+                      : "border-gray-100 hover:border-ph-blue/20"
+                  }`}
+                  onClick={() => togglePreference(platform.title, "platforms")}
+                >
+                  <div className="flex items-start space-x-3">
+                    <div
+                      className={`w-5 h-5 rounded border-2 mt-0.5 flex-shrink-0 transition-colors ${
+                        selectedPreferences.platforms.includes(platform.title)
+                          ? "bg-ph-blue border-ph-blue"
+                          : "border-gray-300"
+                      }`}
+                    >
+                      {selectedPreferences.platforms.includes(platform.title) && (
+                        <svg
+                          className="w-4 h-4 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      )}
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-900">{platform.title}</h3>
+                      <p className="text-sm text-gray-600 mt-1">{platform.description}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="mt-8 flex justify-end animate-fade-in" style={{ animationDelay: "0.2s" }}>
