@@ -24,9 +24,9 @@ const Dashboard = () => {
                   <CheckCircle2 className="h-6 w-6 text-ph-blue" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-semibold text-gray-900 mb-2">Select Preferences</h2>
+                  <h2 className="text-lg font-semibold text-gray-900 mb-2">Get Recommendations</h2>
                   <p className="text-gray-600">
-                    Choose your stance on key political issues to find matching candidates.
+                    Select your senatorial candidate criteria and get recommendations.
                   </p>
                 </div>
               </div>
@@ -52,7 +52,8 @@ const Dashboard = () => {
                 <div>
                   <h2 className="text-lg font-semibold text-gray-900 mb-2">View Past Results</h2>
                   <p className="text-gray-600">
-                    Access your previous candidate matches and compare results.
+                    {/* Access your previous candidate matches and compare results. */}
+                    Coming Soon!
                   </p>
                 </div>
               </div>
