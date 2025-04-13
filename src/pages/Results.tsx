@@ -5,37 +5,10 @@ import { useEffect } from "react";
 
 interface Candidate {
   id: string;
-  name: string;
-  image: string;
-  match: number;
-  party: string;
+  candidate_name: string;
+  score: Float32Array;
+  political_party: string;
 }
-
-// Mock candidate data
-const candidates: Candidate[] = [
-  {
-    id: "1",
-    name: "Juan Dela Cruz",
-    image: "https://placekitten.com/100/100", // Placeholder image
-    match: 95,
-    party: "Progressive Party",
-  },
-  {
-    id: "2",
-    name: "Maria Santos",
-    image: "https://placekitten.com/101/101",
-    match: 88,
-    party: "Reform Party",
-  },
-  {
-    id: "3",
-    name: "Pedro Reyes",
-    image: "https://placekitten.com/102/102",
-    match: 82,
-    party: "Unity Party",
-  },
-  // Add more candidates as needed
-];
 
 const Results = () => {
   const navigate = useNavigate();
@@ -47,7 +20,8 @@ const Results = () => {
     // Request preferences and data from server
   }
 
-  const resultData = JSON.parse(data);
+  const candidates: Candidate[] = JSON.parse(data);
+  console.log(candidates);
 
   const handleShare = (platform: "facebook-feed" | "facebook-story") => {
     // In a real app, implement sharing functionality
@@ -101,17 +75,17 @@ const Results = () => {
               >
                 <div className="relative">
                   <img
-                    src={candidate.image}
-                    alt={candidate.name}
+                    src=""
+                    alt={candidate.candidate_name}
                     className="w-full h-32 object-cover"
                   />
                   <div className="absolute top-2 right-2 bg-white px-2 py-1 rounded-full text-sm font-medium text-ph-blue border border-ph-blue/20">
-                    {candidate.match}% Match
+                    {candidate.score}% Match
                   </div>
                 </div>
                 <div className="p-4">
-                  <h3 className="font-semibold text-gray-900">{candidate.name}</h3>
-                  <p className="text-sm text-gray-600 mt-1">{candidate.party}</p>
+                  <h3 className="font-semibold text-gray-900">{candidate.candidate_name}</h3>
+                  <p className="text-sm text-gray-600 mt-1">{candidate.political_party}</p>
                 </div>
               </div>
             ))}
