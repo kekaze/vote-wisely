@@ -127,7 +127,7 @@ const CriteriaSelection = () => {
       body: JSON.stringify(selectedPreferences)
     };
 
-    fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/api/v1/EmbeddingSearch/similarity-search`, requestOptions)
+    fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/api/v1/EmbeddingSearch/CandidateSearch`, requestOptions)
       .then(async response => {
         const data = await response.json();
         if(!response.ok) {
