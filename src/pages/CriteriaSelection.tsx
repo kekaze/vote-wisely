@@ -129,13 +129,13 @@ const CriteriaSelection = () => {
 
     fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/api/v1/EmbeddingSearch/similarity-search`, requestOptions)
       .then(async response => {
+        const data = await response.json();
         if(!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message);
+          throw new Error(data.message);
         }
 
         setIsLoading(false);
-        navigate("/results", { state: { preferences: selectedPreferences } });
+        navigate("/result", { state: { preferences: selectedPreferences, data: data } });
       })
       .catch (error => {
         setIsLoading(false);
