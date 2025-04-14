@@ -5,18 +5,29 @@ import { useEffect, useState } from "react";
 import { getResult } from "@/utils/result";
 import NotFound from "./NotFound";
 
-interface Candidate {
+interface Result {
   id: string;
-  candidate_name: string;
-  score: number;
-  political_party: string;
+  criteria: Criteria;
+  recommendation: Recommendation[];
+}
+
+interface Criteria{
+  Against: string[];
+  InFavor: string[];
+  Platforms: string[];
+}
+
+interface Recommendation{
+  Score: number;
+  CandidateName: string;
+  PoliticalParty: string;
 }
 
 const Results = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { reference } = useParams();
-  const [candidates, setCandidates] = useState<Candidate[]>([]);
+  const [result, setResult] = useState<Result>();
   const [isLoading, setIsLoading] = useState(true);
   const { preferences, data, state_reference } = location.state || {};
 
@@ -24,10 +35,15 @@ const Results = () => {
     const fetchResults = async () => {
       try {
         if (reference === state_reference && data) {
-          setCandidates(JSON.parse(data));
+          const dataObject = JSON.parse(data);
+          if (dataObject.length > 0) {
+            setResult(dataObject[0]);
+          } else {
+            setResult(null);
+          }
         } else if (reference) {
           const result = await getResult(reference);
-          setCandidates(result);
+          setResult(result);
         }
       } catch (error) {
         toast.error("Failed to load results");
@@ -55,7 +71,7 @@ const Results = () => {
     );
   }
 
-  if (candidates.length === 0) {
+  if (!result) {
     return <NotFound />;
   }
 
@@ -99,24 +115,24 @@ const Results = () => {
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-            {candidates.map((candidate) => (
+            {result.recommendation.map((recommendation, index) => (
               <div
-                key={candidate.id}
+                key={index}
                 className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:border-ph-blue/20 hover:shadow-md transition-all"
               >
                 <div className="relative">
                   <img
                     src=""
-                    alt={candidate.candidate_name}
+                    alt={recommendation.CandidateName}
                     className="w-full h-32 object-cover"
                   />
                   <div className="absolute top-2 right-2 bg-white px-2 py-1 rounded-full text-sm font-medium text-ph-blue border border-ph-blue/20">
-                    {(candidate.score * 100).toFixed(2)}%
+                    {(recommendation.Score * 100).toFixed(2)}%
                   </div>
                 </div>
                 <div className="p-4">
-                  <h3 className="font-semibold text-gray-900">{candidate.candidate_name}</h3>
-                  <p className="text-sm text-gray-600 mt-1">{candidate.political_party}</p>
+                  <h3 className="font-semibold text-gray-900">{recommendation.CandidateName}</h3>
+                  <p className="text-sm text-gray-600 mt-1">{recommendation.PoliticalParty}</p>
                 </div>
               </div>
             ))}

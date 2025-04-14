@@ -3,7 +3,6 @@ export const getResult = async (reference: string) => {
         method: 'GET',
         credentials: 'include' as RequestCredentials,
     });
-    console.log("Hello!");
     if (!response.ok) {
         throw new Error('Failed to fetch result');
     }
