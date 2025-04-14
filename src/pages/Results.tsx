@@ -1,7 +1,9 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Share2, Facebook } from "lucide-react";
 import { toast } from "sonner";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { getResult } from "@/utils/result";
+import NotFound from "./NotFound";
 
 interface Candidate {
   id: string;
@@ -14,21 +16,48 @@ const Results = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { reference } = useParams();
-  let candidates: Candidate[] = [];
-  let { preferences, data, state_reference } = location.state || {};
+  const [candidates, setCandidates] = useState<Candidate[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const { preferences, data, state_reference } = location.state || {};
 
-  if (!preferences || !data) {
-    // Request preferences and data from server
-  }
+  useEffect(() => {
+    const fetchResults = async () => {
+      try {
+        if (reference === state_reference && data) {
+          setCandidates(JSON.parse(data));
+        } else if (reference) {
+          const result = await getResult(reference);
+          setCandidates(result);
+        }
+      } catch (error) {
+        toast.error("Failed to load results");
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  if (reference == state_reference) {
-    candidates = JSON.parse(data);
-  }
+    fetchResults();
+  }, [reference, state_reference, data]);
 
   const handleShare = (platform: "facebook-feed" | "facebook-story") => {
     // In a real app, implement sharing functionality
     toast.success(`Sharing to ${platform === "facebook-feed" ? "Facebook Feed" : "Facebook Story"}`);
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-white to-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-ph-blue mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading results...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (candidates.length === 0) {
+    return <NotFound />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-gray-50">
@@ -47,7 +76,7 @@ const Results = () => {
               <div>
                 <h1 className="text-2xl font-semibold text-gray-900 mb-2">Your Matching Candidates</h1>
                 <p className="text-gray-600">
-                  Based on {preferences.length} selected preferences
+                  Based on selected preferences
                 </p>
               </div>
               <div className="flex gap-2">
@@ -82,7 +111,7 @@ const Results = () => {
                     className="w-full h-32 object-cover"
                   />
                   <div className="absolute top-2 right-2 bg-white px-2 py-1 rounded-full text-sm font-medium text-ph-blue border border-ph-blue/20">
-                    {(candidate.score * 100).toFixed(2)}% Match
+                    {(candidate.score * 100).toFixed(2)}%
                   </div>
                 </div>
                 <div className="p-4">
