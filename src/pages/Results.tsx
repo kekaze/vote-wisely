@@ -29,31 +29,38 @@ const Results = () => {
   const { reference } = useParams();
   const [result, setResult] = useState<Result>();
   const [isLoading, setIsLoading] = useState(true);
-  const { preferences, data, state_reference } = location.state || {};
+  const { data } = location.state || {};
 
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        if (reference === state_reference && data) {
-          const dataObject = JSON.parse(data);
-          if (dataObject.length > 0) {
-            setResult(dataObject[0]);
-          } else {
-            setResult(null);
+        let resultData;
+        
+        if (data) {
+          const parsedData = JSON.parse(data);
+          if (parsedData.length > 0 && parsedData[0].reference === reference) {
+            resultData = parsedData[0];
           }
-        } else if (reference) {
-          const result = await getResult(reference);
-          setResult(result);
         }
+
+        if (!resultData && reference) {
+          const serverData = await getResult(reference);
+          if (serverData.length > 0) {
+            resultData = serverData[0];
+          }
+        }
+
+        setResult(resultData || null);
       } catch (error) {
         toast.error("Failed to load results");
+        setResult(null);
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchResults();
-  }, [reference, state_reference, data]);
+  }, [reference, data]);
 
   const handleShare = (platform: "facebook-feed" | "facebook-story") => {
     // In a real app, implement sharing functionality
