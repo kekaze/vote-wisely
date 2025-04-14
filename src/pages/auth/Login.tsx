@@ -29,7 +29,6 @@ const Login = () => {
 
     fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/api/v1/Auth/Login`, loginParameters)
       .then(async response => {
-        console.log(response);
         if(!response.ok) {
           const data = await response.json();
           throw new Error(data.message);

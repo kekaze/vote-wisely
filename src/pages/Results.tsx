@@ -6,7 +6,7 @@ import { useEffect } from "react";
 interface Candidate {
   id: string;
   candidate_name: string;
-  score: Float32Array;
+  score: number;
   political_party: string;
 }
 
@@ -14,14 +14,16 @@ const Results = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { reference } = useParams();
-  let { preferences, data } = location.state || {};
+  let candidates: Candidate[] = [];
+  let { preferences, data, state_reference } = location.state || {};
 
   if (!preferences || !data) {
     // Request preferences and data from server
   }
 
-  const candidates: Candidate[] = JSON.parse(data);
-  console.log(candidates);
+  if (reference == state_reference) {
+    candidates = JSON.parse(data);
+  }
 
   const handleShare = (platform: "facebook-feed" | "facebook-story") => {
     // In a real app, implement sharing functionality
@@ -80,7 +82,7 @@ const Results = () => {
                     className="w-full h-32 object-cover"
                   />
                   <div className="absolute top-2 right-2 bg-white px-2 py-1 rounded-full text-sm font-medium text-ph-blue border border-ph-blue/20">
-                    {candidate.score}% Match
+                    {(candidate.score * 100).toFixed(2)}% Match
                   </div>
                 </div>
                 <div className="p-4">

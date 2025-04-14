@@ -138,7 +138,8 @@ const CriteriaSelection = () => {
         navigate(`/result/${data.reference}`, { 
           state: { 
             preferences: selectedPreferences, 
-            data: data.result
+            data: data.result,
+            state_reference: data.reference
           } 
         });
       })
