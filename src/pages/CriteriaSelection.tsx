@@ -21,64 +21,228 @@ interface SelectedCriteria {
 
 const preferences: Criteria[] = [
   {
-    title: "Against Contractualization",
-    description: "Support ending the practice of contractualization in employment",
+    "title": "Charter Change (Cha-Cha)",
+    "description": "Pag-amyenda o pagpalit sa 1987 Constitution. Usapin dito ang sistema ng gobyerno, term limits, at foreign ownership."
   },
   {
-    title: "POGO Ban",
-    description: "Support banning Philippine Offshore Gaming Operators",
+    "title": "West Philippine Sea (WPS)",
+    "description": "Pagtindig ng Pilipinas laban sa pag-angkin ng China sa ating karagatan."
   },
   {
-    title: "Death Penalty",
-    description: "Support reinstating capital punishment",
+    "title": "SOGIE Equality Bill / LGBTQ+ Rights",
+    "description": "Batas na poprotekta sa mga LGBTQ+ laban sa diskriminasyon. Kasama rin dito ang usapin ng same-sex civil union."
   },
   {
-    title: "Divorce Law",
-    description: "Support legalizing divorce in the Philippines",
+    "title": "Divorce Legalization",
+    "description": "Pagsasabatas ng diborsyo para sa mga mag-asawang hindi na magkasundo at nais nang legal na maghiwalay."
   },
   {
-    title: "Same-Sex Marriage",
-    description: "Support legalizing same-sex marriage",
+    "title": "Jeepney Modernization",
+    "description": "Pagpalit sa mga lumang jeep ng mga bago at environment-friendly na sasakyan. Isyu ang gastos at epekto sa mga tsuper."
   },
   {
-    title: "Anti-Dynasty Law",
-    description: "Support limiting political dynasties",
+    "title": "Mandatory ROTC",
+    "description": "Pagbabalik ng sapilitang ROTC sa mga estudyante para daw sa disiplina at nasyonalismo."
   },
   {
-    title: "Federalism",
-    description: "Support shifting to a federal form of government",
+    "title": "Violence against Illegal Drugs",
+    "description": "Paggamit ng dahas laban sa iligal na droga."
   },
   {
-    title: "Nuclear Energy",
-    description: "Support developing nuclear energy in the Philippines",
+    "title": "Non-violent approach to illegal drugs",
+    "description": "Pagkontrol sa iligal na droga gamit ang rehabilitasyon at paghuli sa big-time drug lords"
   },
+  {
+    "title": "Environmental Policies",
+    "description": "Pagkontrol sa pagmimina, paggamit ng renewable energy, at paglaban sa climate change."
+  },
+  {
+    "title": "Relations with US & China",
+    "description": "Pakikipag-ugnayan ng Pilipinas sa malalakas na bansa tulad ng Amerika at China."
+  },
+  {
+    "title": "Federalism",
+    "description": "Pagbabago ng sistema ng gobyerno patungong pederalismo upang gawing mas makapangyarihan ang mga rehiyon."
+  },
+  {
+    "title": "Death Penalty Restoration",
+    "description": "Pagbabalik ng parusang kamatayan para sa mga karumal-dumal na krimen."
+  },
+  {
+    "title": "Fake News / Disinformation",
+    "description": "Paglaban sa pagkalat ng maling impormasyon o 'fake news,' lalo na online."
+  },
+  {
+    "title": "Political Dynasties",
+    "description": "Pagkontrol o pagbawal sa mga magkakamag-anak na sabay-sabay o sunod-sunod na tumatakbo sa pwesto."
+  },
+  {
+    "title": "OFW Welfare and Protection",
+    "description": "Pagtiyak sa kaligtasan, karapatan, at pagbibigay ng sapat na tulong sa mga OFWs."
+  },
+  {
+    "title": "Food Security",
+    "description": "Pagtitiyak sa sapat, abot-kaya, at ligtas na pagkain. Kasama dito ang modernisasyon ng agrikultura, epekto ng climate change, at distribusyon ng pagkain."
+  },
+  {
+    "title": "Water Security",
+    "description": "Pagtiyak sa malinis at sapat na supply ng tubig para sa mga tahanan, agrikultura, at industriya."
+  },
+  {
+    "title": "Land Reform",
+    "description": "Pantay na pamamahagi ng lupa sa mga magsasaka at pagresolba sa mga isyu ng pagmamay-ari at pangungupahan ng lupa."
+  },
+  {
+    "title": "Health System Strengthening",
+    "description": "Pagpapalakas ng imprastraktura sa kalusugan, pagdagdag ng mga propesyonal sa medisina, pagtugon sa mental health, at paghahanda sa pandemya."
+  },
+  {
+    "title": "Education Reform",
+    "description": "Pagbabago sa kurikulum para sa pangangailangan ng merkado ng trabaho, pagpapabuti ng edukasyon sa malalayong lugar, at paggamit ng teknolohiya sa edukasyon."
+  },
+  {
+    "title": "Digital Transformation / E-Governance",
+    "description": "Paggamit ng teknolohiya para mapabuti ang serbisyo ng gobyerno, mapataas ang efficiency, at magkaroon ng transparency."
+  },
+  {
+    "title": "Climate Change Adaptation and Mitigation",
+    "description": "Pagbuo at pagpapatupad ng mga estratehiya para harapin ang epekto ng climate change at pagbabawas ng greenhouse gas emissions."
+  },
+  {
+    "title": "Urban Development and Housing",
+    "description": "Pagtugon sa mga hamon ng mabilis na urbanisasyon, kabilang ang traffic, informal settlements, at sustainable urban planning."
+  },
+  {
+    "title": "Culture and Heritage Preservation",
+    "description": "Pangangalaga at pagtataguyod ng mayamang kultura at pamana ng Pilipinas."
+  },
+  {
+    "title": "Good Governance and Bureaucratic Efficiency",
+    "description": "Pagpapabilis sa mga proseso ng gobyerno, pagbabawas ng red tape, at pagtataguyod ng transparency at accountability."
+  },
+  {
+    "title": "Tax Reform",
+    "description": "Pagtitiyak ng patas at efficient na sistema ng pagbubuwis para mapondohan ang mga programa at serbisyo ng gobyerno."
+  },
+  {
+    "title": "Pension System Sustainability",
+    "description": "Pagtitiyak sa pangmatagalang seguridad ng mga pondo ng pensiyon para sa mga retirado."
+  }
 ];
 
 const platforms: Platform[] = [
   {
-    title: "Free Education",
-    description: "Support for free education at all levels",
+    "title": "Poverty Reduction Programs",
+    "description": "Mga programa tulad ng 4Ps (cash aid), pangkabuhayan, at tulong sa mahihirap para maibsan ang kahirapan."
   },
   {
-    title: "Universal Healthcare",
-    description: "Support for comprehensive healthcare coverage for all citizens",
+    "title": "Job Creation",
+    "description": "Paglikha ng mas maraming trabaho sa pamamagitan ng paghikayat sa mga negosyo na mamuhunan dito."
   },
   {
-    title: "Infrastructure Development",
-    description: "Focus on improving transportation and public works",
+    "title": "Affordable Healthcare",
+    "description": "Pagsisigurong abot-kaya ang pagpapaospital at gamot; pagpapatayo ng mas maraming ospital at health centers."
   },
   {
-    title: "Job Creation",
-    description: "Policies focused on creating employment opportunities",
+    "title": "Quality Education",
+    "description": "Pagpapaganda ng kalidad ng edukasyon (K-12 review), dagdag sahod sa guro, scholarships, at sapat na pasilidad sa eskwela."
   },
   {
-    title: "Environmental Protection",
-    description: "Strong environmental policies and climate action",
+    "title": "Support for Farmers & Fisherfolk",
+    "description": "Tulong sa mga magsasaka at mangingisda: subsidiya sa pataba/binhi, irigasyon, farm-to-market roads, laban sa smuggling."
   },
   {
-    title: "Digital Transformation",
-    description: "Modernization of government services and digital infrastructure",
-  }
+    "title": "Infrastructure Development",
+    "description": "Pagpapatayo ng mga kalsada, tulay, tren, airport, at internet infrastructure para mapabilis ang transportasyon at ekonomiya."
+  },
+  {
+    "title": "Anti-Corruption Drive",
+    "description": "Mga hakbang para labanan ang korapsyon sa gobyerno; pagpapatupad ng transparency at pananagutan sa mga opisyal."
+  },
+  {
+    "title": "Ending 'Endo' / Contractualization",
+    "description": "Pagtigil sa sistema ng paulit-ulit na short-term contracts."
+  },
+  {
+    "title": "Peace and Order",
+    "description": "Pagpapanatili ng kapayapaan at kaayusan; pagsugpo sa krimen, terorismo, at pagpapatuloy ng peace process sa mga rebelde."
+  },
+  {
+    "title": "Environmental Protection",
+    "description": "Mga programa para sa pangangalaga ng kalikasan, at paghahanda sa climate change."
+  },
+  {
+    "title": "Support for MSMEs",
+    "description": "Pagtulong sa maliliit na negosyo (Micro, Small, Medium Enterprises) tulad ng pautang, o training."
+  },
+  {
+    "title": "Disaster Preparedness & Resilience",
+    "description": "Paghahanda ng mga komunidad para sa mga sakuna tulad ng bagyo, lindol, baha; mabilis na tulong sa mga biktima."
+  },
+  {
+    "title": "Tourism Promotion",
+    "description": "Pagpapalakas ng turismo para makalikha ng trabaho at mapakilala ang ganda ng Pilipinas."
+  },
+  {
+    "title": "Improved Internet Connectivity",
+    "description": "Pagsisigurong mabilis, mura, at abot-kamay ang internet service sa buong bansa."
+  },
+  {
+    "title": "Affordable Housing",
+    "description": "Mga programa para sa pagpapatayo ng murang pabahay para sa mga Pilipinong walang sariling tahanan."
+  },
+  {
+    "title": "Energy Security & Lower Power Costs",
+    "description": "Pagsisigurong sapat at hindi palaging tumataas ang presyo ng kuryente; pag-explore ng mas murang energy sources."
+  },
+  {
+    "title": "Judicial Reform",
+    "description": "Pagpapabilis sa pag-usad ng mga kaso sa korte at pagtiyak na pantay ang hustisya para sa lahat."
+  },
+  {
+    "title": "Rural Development",
+    "description": "Mga komprehensibong plano para sa pagpapabuti ng kalidad ng buhay at oportunidad sa ekonomiya sa mga rural na lugar."
+  },
+  {
+    "title": "Empowerment of Women",
+    "description": "Mga patakaran at programa na naglalayong isulong ang pagkakapantay-pantay ng kasarian at pagbibigay-kapangyarihan sa kababaihan."
+  },
+  {
+    "title": "Youth Development",
+    "description": "Mga inisyatibo na nakatuon sa edukasyon, trabaho, at pakikilahok ng mga kabataan sa lipunan."
+  },
+  {
+    "title": "Protection of Indigenous Peoples' Rights",
+    "description": "Pagkilala at pagtataguyod sa mga karapatan ng mga katutubong mamamayan."
+  },
+  {
+    "title": "Science and Technology Development",
+    "description": "Pamumuhunan sa pananaliksik at pagpapaunlad at pagtataguyod ng inobasyon."
+  },
+  {
+    "title": "Social Welfare Programs",
+    "description": "Pagtugon sa mga pangangailangan ng mga senior citizen, persons with disabilities, at single-parent families."
+  },
+  {
+    "title": "Strengthening Local Governance",
+    "description": "Pagbibigay-kapangyarihan sa mga Local Government Units (LGUs) at pagtitiyak na mayroon silang sapat na resources at awtonomiya."
+  },
+  {
+    "title": "International Relations",
+    "description": "Paglalahad ng pananaw ng kandidato sa pakikipag-ugnayan sa iba pang bansa at internasyonal na organisasyon."
+  },
+  {
+    "title": "Cybersecurity",
+    "description": "Mga estratehiya para protektahan ang digital infrastructure ng bansa at labanan ang cybercrime."
+  },
+  {
+    "title": "Arts and Culture Development",
+    "description": "Pagsuporta sa sektor ng sining at kultura."
+  },
+  {
+    "title": "Cost of Living / Inflation",
+    "description": "Pagtugon sa tumataas na presyo ng mga pangunahing bilihin."
+  },
 ];
 
 const CriteriaSelection = () => {
