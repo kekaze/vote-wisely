@@ -98,9 +98,6 @@ const Results = () => {
             <div className="flex justify-between items-start">
               <div>
                 <h1 className="text-2xl font-semibold text-gray-900 mb-2">Your Matching Candidates</h1>
-                <p className="text-gray-600">
-                  Based on selected preferences
-                </p>
               </div>
               <div className="flex gap-2">
                 <button
