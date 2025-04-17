@@ -341,7 +341,7 @@ const CriteriaSelection = () => {
           </button>
 
           <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 mb-6 animate-fade-in">
-            <h1 className="text-2xl font-semibold text-gray-900 mb-2">Select Your Criteria and Priorities</h1>
+            <h1 className="text-2xl font-semibold text-gray-900 mb-2">Select Your Stances and Priorities</h1>
             <p className="text-gray-600">
               Choose your political stances and prioritized platforms.
             </p>
@@ -349,8 +349,8 @@ const CriteriaSelection = () => {
 
           {/* Political Stances Section */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 mb-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Stances on National Issues</h2>
-            <p className="text-gray-600 mb-4">Select your position on these political issues.</p>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">Stance on National Issues</h2>
+            <p className="text-gray-600 mb-4">Select your position on these political issues. You need to provide a stance on at least 3 issues.</p>
             <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {preferences.map((preference, index) => (
                 <div
