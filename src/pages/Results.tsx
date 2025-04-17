@@ -27,17 +27,17 @@ const Results = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { reference } = useParams();
+  const { state_data } = location.state || {};
   const [result, setResult] = useState<Result>();
   const [isLoading, setIsLoading] = useState(true);
-  const { data } = location.state || {};
 
   useEffect(() => {
     const fetchResults = async () => {
       try {
         let resultData;
         
-        if (data) {
-          const parsedData = JSON.parse(data);
+        if (state_data) {
+          const parsedData = JSON.parse(state_data);
           if (parsedData.length > 0 && parsedData[0].reference === reference) {
             resultData = parsedData[0];
           }
@@ -60,7 +60,7 @@ const Results = () => {
     };
 
     fetchResults();
-  }, [reference, data]);
+  }, [reference, state_data]);
 
   const handleShare = (platform: "facebook-feed" | "facebook-story") => {
     // In a real app, implement sharing functionality

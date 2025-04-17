@@ -137,7 +137,7 @@ const CriteriaSelection = () => {
         setIsLoading(false);
         navigate(`/result/${data.reference}`, { 
           state: {
-            result: data.result
+            state_data: data.result
           } 
         });
       })
