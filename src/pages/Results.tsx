@@ -84,65 +84,108 @@ const Results = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-gray-50">
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
-          <button
-            onClick={() => navigate("/dashboard")}
-            className="flex items-center text-gray-600 hover:text-gray-900 mb-6 group"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2 transition-transform group-hover:-translate-x-1" />
-            Back to Dashboard
-          </button>
+      <div className="container mx-auto px-4 py-6">
+        <div className="max-w-[95%] mx-auto">
+          <div className="flex justify-between items-center mb-6">
+            <button
+              onClick={() => navigate("/dashboard")}
+              className="flex items-center text-gray-600 hover:text-gray-900 group"
+            >
+              <ArrowLeft className="h-4 w-4 mr-2 transition-transform group-hover:-translate-x-1" />
+              Back to Dashboard
+            </button>
+            <div className="flex gap-2">
+              <button
+                onClick={() => handleShare("facebook-feed")}
+                className="flex items-center px-3 py-2 text-sm bg-[#1877F2] text-white rounded hover:bg-[#1877F2]/90 transition-colors"
+              >
+                <Facebook className="h-4 w-4 mr-2" />
+                Share to Feed
+              </button>
+              <button
+                onClick={() => handleShare("facebook-story")}
+                className="flex items-center px-3 py-2 text-sm bg-gradient-to-r from-[#FF7A00] to-[#FF0169] text-white rounded hover:opacity-90 transition-opacity"
+              >
+                <Share2 className="h-4 w-4 mr-2" />
+                Share to Story
+              </button>
+            </div>
+          </div>
 
-          <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 mb-6 animate-fade-in">
-            <div className="flex justify-between items-start">
-              <div>
-                <h1 className="text-2xl font-semibold text-gray-900 mb-2">Your Matching Candidates</h1>
+          <div className="grid grid-cols-12 gap-6">
+            {/* Selected Criteria Section */}
+            <div className="col-span-12 lg:col-span-4">
+              <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-4 sticky top-6">
+                <h2 className="text-lg font-semibold text-gray-900 mb-3">Your Selected Criteria</h2>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-sm font-medium text-gray-900 mb-2">In Favor Of</h3>
+                    <ul className="space-y-1">
+                      {result.criteria.InFavor.map((item, index) => (
+                        <li key={index} className="text-sm text-gray-600 flex items-start">
+                          <span className="text-ph-blue mr-2">•</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-medium text-gray-900 mb-2">Against</h3>
+                    <ul className="space-y-1">
+                      {result.criteria.Against.map((item, index) => (
+                        <li key={index} className="text-sm text-gray-600 flex items-start">
+                          <span className="text-ph-red mr-2">•</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-medium text-gray-900 mb-2">Platforms</h3>
+                    <ul className="space-y-1">
+                      {result.criteria.Platforms.map((item, index) => (
+                        <li key={index} className="text-sm text-gray-600 flex items-start">
+                          <span className="text-ph-green mr-2">•</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => handleShare("facebook-feed")}
-                  className="flex items-center px-3 py-2 text-sm bg-[#1877F2] text-white rounded hover:bg-[#1877F2]/90 transition-colors"
-                >
-                  <Facebook className="h-4 w-4 mr-2" />
-                  Share to Feed
-                </button>
-                <button
-                  onClick={() => handleShare("facebook-story")}
-                  className="flex items-center px-3 py-2 text-sm bg-gradient-to-r from-[#FF7A00] to-[#FF0169] text-white rounded hover:opacity-90 transition-opacity"
-                >
-                  <Share2 className="h-4 w-4 mr-2" />
-                  Share to Story
-                </button>
+            </div>
+
+            {/* Candidates List Section */}
+            <div className="col-span-12 lg:col-span-8">
+              <div className="bg-white rounded-lg shadow-sm border border-gray-100">
+                <div className="p-4 border-b border-gray-100">
+                  <h2 className="text-lg font-semibold text-gray-900">Matching Candidates</h2>
+                </div>
+                <div className="divide-y divide-gray-100">
+                  {result.recommendation.map((recommendation, index) => (
+                    <div
+                      key={index}
+                      className="p-4 hover:bg-gray-50 transition-colors"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-semibold text-gray-900 truncate">{recommendation.CandidateName}</h3>
+                          <p className="text-sm text-gray-600">{recommendation.PoliticalParty}</p>
+                        </div>
+                        <div className="ml-4 flex-shrink-0">
+                          <div className="bg-ph-blue/10 text-ph-blue px-3 py-1 rounded-full text-sm font-medium">
+                            {(recommendation.Score * 100).toFixed(2)}% Match
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-            {result.recommendation.map((recommendation, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:border-ph-blue/20 hover:shadow-md transition-all"
-              >
-                <div className="relative">
-                  <img
-                    src=""
-                    alt={recommendation.CandidateName}
-                    className="w-full h-32 object-cover"
-                  />
-                  <div className="absolute top-2 right-2 bg-white px-2 py-1 rounded-full text-sm font-medium text-ph-blue border border-ph-blue/20">
-                    {(recommendation.Score * 100).toFixed(2)}%
-                  </div>
-                </div>
-                <div className="p-4">
-                  <h3 className="font-semibold text-gray-900">{recommendation.CandidateName}</h3>
-                  <p className="text-sm text-gray-600 mt-1">{recommendation.PoliticalParty}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 text-center text-sm text-gray-600 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+          <div className="mt-6 text-center text-sm text-gray-600">
             <p>
               These results are based on publicly available information and statements from the candidates.
             </p>
