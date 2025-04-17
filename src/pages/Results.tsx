@@ -114,7 +114,7 @@ const Results = () => {
 
           <div className="grid grid-cols-12 gap-6">
             {/* Selected Criteria Section */}
-            <div className="col-span-12 lg:col-span-4">
+            <div className="col-span-12 lg:col-span-3">
               <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-4 sticky top-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-3">Your Selected Criteria</h2>
                 <div className="space-y-4">
@@ -156,7 +156,7 @@ const Results = () => {
             </div>
 
             {/* Candidates List Section */}
-            <div className="col-span-12 lg:col-span-8">
+            <div className="col-span-12 lg:col-span-6">
               <div className="bg-white rounded-lg shadow-sm border border-gray-100">
                 <div className="p-4 border-b border-gray-100">
                   <h2 className="text-lg font-semibold text-gray-900">Matching Candidates</h2>
@@ -165,7 +165,7 @@ const Results = () => {
                   {result.recommendation.map((recommendation, index) => (
                     <div
                       key={index}
-                      className="p-4 hover:bg-gray-50 transition-colors"
+                      className="p-3 hover:bg-gray-50 transition-colors"
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex-1 min-w-0">
@@ -180,6 +180,16 @@ const Results = () => {
                       </div>
                     </div>
                   ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Placeholder for party-lists */}
+            <div className="col-span-12 lg:col-span-3">
+              <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-4 sticky top-6">
+                <h2 className="text-lg font-semibold text-gray-900 mb-3">Coming soon!</h2>
+                <div className="text-sm text-gray-600">
+                  <p>This section will contain your matching party-lists.</p>
                 </div>
               </div>
             </div>
