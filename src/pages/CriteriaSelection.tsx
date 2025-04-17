@@ -27,7 +27,7 @@ const preferences: Criteria[] = [
     "description": "Pag-amyenda o pagpalit sa 1987 Constitution. Usapin dito ang sistema ng gobyerno, term limits, at foreign ownership."
   },
   {
-    "title": "West Philippine Sea (WPS)",
+    "title": "Sovereignty on West Philippine Sea",
     "description": "Pagtindig ng Pilipinas laban sa pag-angkin ng China sa ating karagatan."
   },
   {
