@@ -314,8 +314,8 @@ const CriteriaSelection = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-gray-50">
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
+      <div className="container mx-auto px-4 py-8 w-full">
+        <div className="w-full">
           <button
             onClick={() => navigate("/dashboard")}
             className="flex items-center text-gray-600 hover:text-gray-900 mb-6 group"
@@ -335,7 +335,7 @@ const CriteriaSelection = () => {
           <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 mb-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Political Stances</h2>
             <p className="text-gray-600 mb-4">Select your position on these political issues.</p>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {preferences.map((preference, index) => (
                 <div
                   key={`criteria-${index}`}
@@ -378,7 +378,7 @@ const CriteriaSelection = () => {
           <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 mb-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Platforms</h2>
             <p className="text-gray-600 mb-4">Select the platforms that matter most to you.</p>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {platforms.map((platform, index) => (
                 <div
                   key={`platform-${index}`}
