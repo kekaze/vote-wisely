@@ -20,6 +20,7 @@ interface SelectedCriteria {
   platforms: string[];
 }
 
+const platform_limit = 10;
 const preferences: Criteria[] = [
   {
     "title": "Charter Change (Cha-Cha)",
@@ -261,15 +262,26 @@ const CriteriaSelection = () => {
       const criteria = { ...prev };
       
       if (category === "in_favor" || category === "against" || category === "with_reservations") {
-        const otherCategories = ["in_favor", "against", "with_reservations"].filter(c => c !== category);
-        otherCategories.forEach(otherCategory => {
+        const categoriesNotSelected = ["in_favor", "against", "with_reservations"].filter(c => c !== category);
+        categoriesNotSelected.forEach(otherCategory => {
           criteria[otherCategory] = criteria[otherCategory].filter(p => p !== title);
         });
       }
       
-      criteria[category] = criteria[category].includes(title)
-        ? criteria[category].filter((p) => p !== title)
-        : [...criteria[category], title];
+      if (category === "platforms") {
+        if (criteria.platforms.includes(title)) {
+          criteria.platforms = criteria.platforms.filter(p => p !== title);
+        } else if (criteria.platforms.length < platform_limit) {
+          criteria.platforms = [...criteria.platforms, title];
+        } else {
+          toast.error(`You can only select up to ${platform_limit} platforms`);
+          return prev;
+        }
+      } else {
+        criteria[category] = criteria[category].includes(title)
+          ? criteria[category].filter((p) => p !== title)
+          : [...criteria[category], title];
+      }
       
       return criteria;
     });
@@ -391,7 +403,12 @@ const CriteriaSelection = () => {
           {/* Platforms Section */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 mb-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Platforms</h2>
-            <p className="text-gray-600 mb-4">Select the platforms that matter most to you.</p>
+            <p className="text-gray-600 mb-4">
+              Select up to 5 platforms that matter most to you. 
+              <span className="ml-2 text-sm font-medium">
+                ({selectedPreferences.platforms.length}/5 selected)
+              </span>
+            </p>
             <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {platforms.map((platform, index) => (
                 <div
