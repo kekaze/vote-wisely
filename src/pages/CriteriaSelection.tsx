@@ -288,10 +288,9 @@ const CriteriaSelection = () => {
   };
 
   const handleSubmit = () => {
-    const totalSelected = Object.values(selectedPreferences).reduce(
-      (sum, arr) => sum + arr.length,
-      0
-    );
+    const totalSelected = Object.entries(selectedPreferences)
+      .filter(([key]) => key !== "platforms")
+      .reduce((sum, [_, arr]) => sum + arr.length, 0);
     
     if (totalSelected < 3) {
       toast.error("Please select at least 3 preferences");
