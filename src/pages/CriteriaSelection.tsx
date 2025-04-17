@@ -21,7 +21,7 @@ interface SelectedCriteria {
 }
 
 const platform_limit = 10;
-const preferences: Criteria[] = [
+const criteria: Criteria[] = [
   {
     "title": "Charter Change (Cha-Cha)",
     "description": "Pag-amyenda o pagpalit sa 1987 Constitution. Usapin dito ang sistema ng gobyerno, term limits, at foreign ownership."
@@ -351,22 +351,22 @@ const CriteriaSelection = () => {
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Stance on National Issues</h2>
             <p className="text-gray-600 mb-4">Select your position on these political issues. You need to provide a stance on at least 3 issues.</p>
             <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-              {preferences.map((preference, index) => (
+              {criteria.map((criterion, index) => (
                 <div
                   key={`criteria-${index}`}
                   className="bg-white p-4 rounded-lg shadow-sm border border-gray-100"
                 >
                   <div className="flex items-start space-x-3">
                     <div className="flex-1">
-                      <h3 className="font-medium text-gray-900">{preference.title}</h3>
-                      <p className="text-sm text-gray-600 mt-1">{preference.description}</p>
+                      <h3 className="font-medium text-gray-900">{criterion.title}</h3>
+                      <p className="text-sm text-gray-600 mt-1">{criterion.description}</p>
                     </div>
                   </div>
                   <div className="mt-4 flex flex-col gap-2 w-full">
                     <button
-                      onClick={() => togglePreference(preference.title, "in_favor")}
+                      onClick={() => togglePreference(criterion.title, "in_favor")}
                       className={`w-full px-3 py-1.5 text-sm rounded-full transition-colors ${
-                        selectedPreferences.in_favor.includes(preference.title)
+                        selectedPreferences.in_favor.includes(criterion.title)
                           ? "bg-ph-blue text-white"
                           : "bg-gray-100 text-gray-600 hover:bg-ph-blue/10"
                       }`}
@@ -374,9 +374,9 @@ const CriteriaSelection = () => {
                       In Favor
                     </button>
                     <button
-                      onClick={() => togglePreference(preference.title, "with_reservations")}
+                      onClick={() => togglePreference(criterion.title, "with_reservations")}
                       className={`w-full px-3 py-1.5 text-sm rounded-full transition-colors ${
-                        selectedPreferences.with_reservations.includes(preference.title)
+                        selectedPreferences.with_reservations.includes(criterion.title)
                           ? "bg-ph-yellow text-white"
                           : "bg-gray-100 text-gray-600 hover:bg-ph-yellow/10"
                       }`}
@@ -384,9 +384,9 @@ const CriteriaSelection = () => {
                       With Reservations
                     </button>
                     <button
-                      onClick={() => togglePreference(preference.title, "against")}
+                      onClick={() => togglePreference(criterion.title, "against")}
                       className={`w-full px-3 py-1.5 text-sm rounded-full transition-colors ${
-                        selectedPreferences.against.includes(preference.title)
+                        selectedPreferences.against.includes(criterion.title)
                           ? "bg-ph-red text-white"
                           : "bg-gray-100 text-gray-600 hover:bg-ph-red/10"
                       }`}
