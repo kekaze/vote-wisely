@@ -282,7 +282,7 @@ const CriteriaSelection = () => {
           ? criteria[category].filter((p) => p !== title)
           : [...criteria[category], title];
       }
-      
+
       return criteria;
     });
   };
@@ -406,7 +406,7 @@ const CriteriaSelection = () => {
             <p className="text-gray-600 mb-4">
               Select up to 5 platforms that matter most to you. 
               <span className="ml-2 text-sm font-medium">
-                ({selectedPreferences.platforms.length}/5 selected)
+                ({selectedPreferences.platforms.length}/{platform_limit} selected)
               </span>
             </p>
             <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
