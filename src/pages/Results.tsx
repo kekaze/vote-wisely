@@ -161,21 +161,21 @@ const Results = () => {
                 <div className="p-4 border-b border-gray-100">
                   <h2 className="text-lg font-semibold text-gray-900">Matching Candidates</h2>
                 </div>
-                <div className="divide-y divide-gray-100">
+                <div className="grid grid-cols-2 divide-x divide-y divide-gray-100">
                   {result.recommendation.map((recommendation, index) => (
                     <div
                       key={index}
-                      className="p-3 hover:bg-gray-50 transition-colors"
+                      className="p-5 hover:bg-gray-50 transition-colors"
                     >
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-semibold text-gray-900 truncate">{recommendation.CandidateName}</h3>
-                          <p className="text-sm text-gray-600">{recommendation.PoliticalParty}</p>
-                        </div>
-                        <div className="ml-4 flex-shrink-0">
-                          <div className="bg-ph-blue/10 text-ph-blue px-3 py-1 rounded-full text-sm font-medium">
-                            {(recommendation.Score * 100).toFixed(2)}% Match
+                      <div className="flex flex-col h-full">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3">
+                            <h3 className="font-semibold text-gray-900 truncate">{recommendation.CandidateName}</h3>
+                            <div className="bg-ph-blue/10 text-ph-blue px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap">
+                              {(recommendation.Score * 100).toFixed(2)}%
+                            </div>
                           </div>
+                          <p className="text-sm text-gray-600">{recommendation.PoliticalParty}</p>
                         </div>
                       </div>
                     </div>
