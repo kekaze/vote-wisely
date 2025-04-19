@@ -18,6 +18,8 @@ interface SelectedCriteria {
   against: string[];
   with_reservations: string[];
   platforms: string[];
+  is_political_dynasty: boolean | null;
+  has_criminal_records: boolean | null;
 }
 
 const platform_limit = 10;
@@ -318,37 +320,42 @@ const platforms: Platform[] = [
 const CriteriaSelection = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedStances, setSelectedStances] = useState<SelectedCriteria>({
+  const [selectedCriteria, setSelectedCriteria] = useState<SelectedCriteria>({
     in_favor: [],
     against: [],
     with_reservations: [],
-    platforms: []
+    platforms: [],
+    is_political_dynasty: null,
+    has_criminal_records: null
   });
 
   const togglePreference = (title: string, category: keyof SelectedCriteria) => {
-    setSelectedStances((prev) => {
+    setSelectedCriteria((prev) => {
       const criteria = { ...prev };
       
       if (category === "in_favor" || category === "against" || category === "with_reservations") {
         const categoriesNotSelected = ["in_favor", "against", "with_reservations"].filter(c => c !== category);
         categoriesNotSelected.forEach(otherCategory => {
-          criteria[otherCategory] = criteria[otherCategory].filter(p => p !== title);
+          criteria[otherCategory] = (criteria[otherCategory] as string[]).filter(p => p !== title);
         });
       }
       
       if (category === "platforms") {
-        if (criteria.platforms.includes(title)) {
-          criteria.platforms = criteria.platforms.filter(p => p !== title);
-        } else if (criteria.platforms.length < platform_limit) {
-          criteria.platforms = [...criteria.platforms, title];
+        if ((criteria.platforms as string[]).includes(title)) {
+          criteria.platforms = (criteria.platforms as string[]).filter(p => p !== title);
+        } else if ((criteria.platforms as string[]).length < platform_limit) {
+          criteria.platforms = [...(criteria.platforms as string[]), title];
         } else {
           toast.error(`You can only select up to ${platform_limit} platforms`);
           return prev;
         }
+      } else if (category === "is_political_dynasty" || category === "has_criminal_records") {
+        // These are handled separately in the UI
+        return prev;
       } else {
-        criteria[category] = criteria[category].includes(title)
-          ? criteria[category].filter((p) => p !== title)
-          : [...criteria[category], title];
+        criteria[category] = (criteria[category] as string[]).includes(title)
+          ? (criteria[category] as string[]).filter((p) => p !== title)
+          : [...(criteria[category] as string[]), title];
       }
 
       return criteria;
@@ -356,22 +363,27 @@ const CriteriaSelection = () => {
   };
 
   const handleSubmit = () => {
-    const totalSelected = Object.entries(selectedStances)
-      .filter(([key]) => key !== "platforms")
-      .reduce((sum, [_, arr]) => sum + arr.length, 0);
+    const totalSelected = Object.entries(selectedCriteria)
+      .filter(([key]) => key !== "platforms" && key !== "is_political_dynasty" && key !== "has_criminal_records")
+      .reduce((sum, [_, arr]) => sum + (arr as string[]).length, 0);
     
     if (totalSelected < 3) {
       toast.error("Please select at least 3 Stances");
       return;
     }
     
+    if (selectedCriteria.is_political_dynasty === null || selectedCriteria.has_criminal_records === null) {
+      toast.error("Please answer all candidate background questions");
+      return;
+    }
+
     setIsLoading(true);
 
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include' as RequestCredentials,
-      body: JSON.stringify(selectedStances)
+      body: JSON.stringify(selectedCriteria)
     };
 
     fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/api/v1/EmbeddingSearch/CandidateSearch`, requestOptions)
@@ -414,6 +426,69 @@ const CriteriaSelection = () => {
             </p>
           </div>
 
+          <div className="bg-white shadow rounded-lg p-6 mb-8">
+            <h2 className="text-xl font-semibold mb-4">Candidate Background</h2>
+            <p className="text-gray-600 mb-4">Please answer these questions to help us recommend the right senatorial candidates for you.</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Do you prefer candidates who are not part of a political dynasty?
+                </label>
+                <div className="flex space-x-4">
+                  <button
+                    onClick={() => setSelectedCriteria(prev => ({ ...prev, is_political_dynasty: true }))}
+                    className={`px-4 py-2 rounded-md ${
+                      selectedCriteria.is_political_dynasty === true
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    Yes
+                  </button>
+                  <button
+                    onClick={() => setSelectedCriteria(prev => ({ ...prev, is_political_dynasty: false }))}
+                    className={`px-4 py-2 rounded-md ${
+                      selectedCriteria.is_political_dynasty === false
+                        ? 'bg-red-600 text-white'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    No
+                  </button>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Do you prefer candidates without a criminal record?
+                </label>
+                <div className="flex space-x-4">
+                  <button
+                    onClick={() => setSelectedCriteria(prev => ({ ...prev, has_criminal_records: true }))}
+                    className={`px-4 py-2 rounded-md ${
+                      selectedCriteria.has_criminal_records === true
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    Yes
+                  </button>
+                  <button
+                    onClick={() => setSelectedCriteria(prev => ({ ...prev, has_criminal_records: false }))}
+                    className={`px-4 py-2 rounded-md ${
+                      selectedCriteria.has_criminal_records === false
+                        ? 'bg-red-600 text-white'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    No
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Political Stances Section */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 mb-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Stance on National Issues</h2>
@@ -434,7 +509,7 @@ const CriteriaSelection = () => {
                     <button
                       onClick={() => togglePreference(criterion.title, "in_favor")}
                       className={`w-full px-3 py-1.5 text-sm rounded-full transition-colors ${
-                        selectedStances.in_favor.includes(criterion.title)
+                        selectedCriteria.in_favor.includes(criterion.title)
                           ? "bg-ph-blue text-white"
                           : "bg-gray-100 text-gray-600 hover:bg-ph-blue/10"
                       }`}
@@ -444,7 +519,7 @@ const CriteriaSelection = () => {
                     <button
                       onClick={() => togglePreference(criterion.title, "with_reservations")}
                       className={`w-full px-3 py-1.5 text-sm rounded-full transition-colors ${
-                        selectedStances.with_reservations.includes(criterion.title)
+                        selectedCriteria.with_reservations.includes(criterion.title)
                           ? "bg-ph-yellow text-white"
                           : "bg-gray-100 text-gray-600 hover:bg-ph-yellow/10"
                       }`}
@@ -454,7 +529,7 @@ const CriteriaSelection = () => {
                     <button
                       onClick={() => togglePreference(criterion.title, "against")}
                       className={`w-full px-3 py-1.5 text-sm rounded-full transition-colors ${
-                        selectedStances.against.includes(criterion.title)
+                        selectedCriteria.against.includes(criterion.title)
                           ? "bg-ph-red text-white"
                           : "bg-gray-100 text-gray-600 hover:bg-ph-red/10"
                       }`}
@@ -473,7 +548,7 @@ const CriteriaSelection = () => {
             <p className="text-gray-600 mb-4">
               Select up to {platform_limit} platforms that matter most to you. 
               <span className="ml-2 text-sm font-medium">
-                ({selectedStances.platforms.length}/{platform_limit} selected)
+                ({selectedCriteria.platforms.length}/{platform_limit} selected)
               </span>
             </p>
             <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
@@ -481,7 +556,7 @@ const CriteriaSelection = () => {
                 <div
                   key={`platform-${index}`}
                   className={`bg-white p-4 rounded-lg shadow-sm border cursor-pointer transition-all ${
-                    selectedStances.platforms.includes(platform.title)
+                    selectedCriteria.platforms.includes(platform.title)
                       ? "border-ph-blue ring-1 ring-ph-blue/20"
                       : "border-gray-100 hover:border-ph-blue/20"
                   }`}
@@ -490,12 +565,12 @@ const CriteriaSelection = () => {
                   <div className="flex items-start space-x-3">
                     <div
                       className={`w-5 h-5 rounded border-2 mt-0.5 flex-shrink-0 transition-colors ${
-                        selectedStances.platforms.includes(platform.title)
+                        selectedCriteria.platforms.includes(platform.title)
                           ? "bg-ph-blue border-ph-blue"
                           : "border-gray-300"
                       }`}
                     >
-                      {selectedStances.platforms.includes(platform.title) && (
+                      {selectedCriteria.platforms.includes(platform.title) && (
                         <svg
                           className="w-4 h-4 text-white"
                           fill="none"
