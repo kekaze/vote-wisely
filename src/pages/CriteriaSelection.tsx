@@ -18,8 +18,8 @@ interface SelectedCriteria {
   against: string[];
   with_reservations: string[];
   platforms: string[];
-  is_political_dynasty: boolean | null;
-  has_criminal_records: boolean | null;
+  not_political_dyansty: boolean | null;
+  no_criminal_records: boolean | null;
 }
 
 const platform_limit = 10;
@@ -325,8 +325,8 @@ const CriteriaSelection = () => {
     against: [],
     with_reservations: [],
     platforms: [],
-    is_political_dynasty: null,
-    has_criminal_records: null
+    not_political_dyansty: null,
+    no_criminal_records: null
   });
 
   const togglePreference = (title: string, category: keyof SelectedCriteria) => {
@@ -349,21 +349,21 @@ const CriteriaSelection = () => {
           toast.error(`You can only select up to ${platform_limit} platforms`);
           return prev;
         }
-      } else if (category === "is_political_dynasty" || category === "has_criminal_records") {
+      } else if (category === "not_political_dyansty" || category === "no_criminal_records") {
         return prev;
       } else {
         criteria[category] = (criteria[category] as string[]).includes(title)
           ? (criteria[category] as string[]).filter((p) => p !== title)
           : [...(criteria[category] as string[]), title];
       }
-
+      console.log(criteria);
       return criteria;
     });
   };
 
   const handleSubmit = () => {
     const totalSelected = Object.entries(selectedCriteria)
-      .filter(([key]) => key !== "platforms" && key !== "is_political_dynasty" && key !== "has_criminal_records")
+      .filter(([key]) => key !== "platforms" && key !== "not_political_dyansty" && key !== "no_criminal_records")
       .reduce((sum, [_, arr]) => sum + (arr as string[]).length, 0);
     
     if (totalSelected < 3) {
@@ -371,7 +371,7 @@ const CriteriaSelection = () => {
       return;
     }
     
-    if (selectedCriteria.is_political_dynasty === null || selectedCriteria.has_criminal_records === null) {
+    if (selectedCriteria.not_political_dyansty === null || selectedCriteria.no_criminal_records === null) {
       toast.error("Please answer all candidate background questions");
       return;
     }
@@ -436,9 +436,9 @@ const CriteriaSelection = () => {
                 </label>
                 <div className="flex space-x-4">
                   <button
-                    onClick={() => setSelectedCriteria(prev => ({ ...prev, is_political_dynasty: true }))}
+                    onClick={() => setSelectedCriteria(prev => ({ ...prev, not_political_dyansty: true }))}
                     className={`px-4 py-2 rounded-md ${
-                      selectedCriteria.is_political_dynasty === true
+                      selectedCriteria.not_political_dyansty === true
                         ? 'bg-blue-600 text-white'
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
@@ -446,9 +446,9 @@ const CriteriaSelection = () => {
                     Yes
                   </button>
                   <button
-                    onClick={() => setSelectedCriteria(prev => ({ ...prev, is_political_dynasty: false }))}
+                    onClick={() => setSelectedCriteria(prev => ({ ...prev, not_political_dyansty: false }))}
                     className={`px-4 py-2 rounded-md ${
-                      selectedCriteria.is_political_dynasty === false
+                      selectedCriteria.not_political_dyansty === false
                         ? 'bg-red-600 text-white'
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
@@ -464,9 +464,9 @@ const CriteriaSelection = () => {
                 </label>
                 <div className="flex space-x-4">
                   <button
-                    onClick={() => setSelectedCriteria(prev => ({ ...prev, has_criminal_records: true }))}
+                    onClick={() => setSelectedCriteria(prev => ({ ...prev, no_criminal_records: true }))}
                     className={`px-4 py-2 rounded-md ${
-                      selectedCriteria.has_criminal_records === true
+                      selectedCriteria.no_criminal_records === true
                         ? 'bg-blue-600 text-white'
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
@@ -474,9 +474,9 @@ const CriteriaSelection = () => {
                     Yes
                   </button>
                   <button
-                    onClick={() => setSelectedCriteria(prev => ({ ...prev, has_criminal_records: false }))}
+                    onClick={() => setSelectedCriteria(prev => ({ ...prev, no_criminal_records: false }))}
                     className={`px-4 py-2 rounded-md ${
-                      selectedCriteria.has_criminal_records === false
+                      selectedCriteria.no_criminal_records === false
                         ? 'bg-red-600 text-white'
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
