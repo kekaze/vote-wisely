@@ -50,9 +50,8 @@ const Signup = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white to-gray-50 p-4">
       <div className="w-full max-w-md">
         <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-100 animate-fade-in">
-          <div className="text-center mb-8">
-            <h1 className="text-2xl font-semibold text-gray-900">Create Account</h1>
-            <p className="text-gray-600 mt-2">Join the electoral process</p>
+          <div className="text-center mb-5">
+            <h1 className="text-2xl font-semibold text-gray-900">Create An Account</h1>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
