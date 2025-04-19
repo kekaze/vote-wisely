@@ -318,7 +318,7 @@ const platforms: Platform[] = [
 const CriteriaSelection = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedPreferences, setSelectedPreferences] = useState<SelectedCriteria>({
+  const [selectedStances, setSelectedStances] = useState<SelectedCriteria>({
     in_favor: [],
     against: [],
     with_reservations: [],
@@ -326,7 +326,7 @@ const CriteriaSelection = () => {
   });
 
   const togglePreference = (title: string, category: keyof SelectedCriteria) => {
-    setSelectedPreferences((prev) => {
+    setSelectedStances((prev) => {
       const criteria = { ...prev };
       
       if (category === "in_favor" || category === "against" || category === "with_reservations") {
@@ -356,12 +356,12 @@ const CriteriaSelection = () => {
   };
 
   const handleSubmit = () => {
-    const totalSelected = Object.entries(selectedPreferences)
+    const totalSelected = Object.entries(selectedStances)
       .filter(([key]) => key !== "platforms")
       .reduce((sum, [_, arr]) => sum + arr.length, 0);
     
     if (totalSelected < 3) {
-      toast.error("Please select at least 3 preferences");
+      toast.error("Please select at least 3 Stances");
       return;
     }
     
@@ -371,7 +371,7 @@ const CriteriaSelection = () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include' as RequestCredentials,
-      body: JSON.stringify(selectedPreferences)
+      body: JSON.stringify(selectedStances)
     };
 
     fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/api/v1/EmbeddingSearch/CandidateSearch`, requestOptions)
@@ -434,7 +434,7 @@ const CriteriaSelection = () => {
                     <button
                       onClick={() => togglePreference(criterion.title, "in_favor")}
                       className={`w-full px-3 py-1.5 text-sm rounded-full transition-colors ${
-                        selectedPreferences.in_favor.includes(criterion.title)
+                        selectedStances.in_favor.includes(criterion.title)
                           ? "bg-ph-blue text-white"
                           : "bg-gray-100 text-gray-600 hover:bg-ph-blue/10"
                       }`}
@@ -444,7 +444,7 @@ const CriteriaSelection = () => {
                     <button
                       onClick={() => togglePreference(criterion.title, "with_reservations")}
                       className={`w-full px-3 py-1.5 text-sm rounded-full transition-colors ${
-                        selectedPreferences.with_reservations.includes(criterion.title)
+                        selectedStances.with_reservations.includes(criterion.title)
                           ? "bg-ph-yellow text-white"
                           : "bg-gray-100 text-gray-600 hover:bg-ph-yellow/10"
                       }`}
@@ -454,7 +454,7 @@ const CriteriaSelection = () => {
                     <button
                       onClick={() => togglePreference(criterion.title, "against")}
                       className={`w-full px-3 py-1.5 text-sm rounded-full transition-colors ${
-                        selectedPreferences.against.includes(criterion.title)
+                        selectedStances.against.includes(criterion.title)
                           ? "bg-ph-red text-white"
                           : "bg-gray-100 text-gray-600 hover:bg-ph-red/10"
                       }`}
@@ -473,7 +473,7 @@ const CriteriaSelection = () => {
             <p className="text-gray-600 mb-4">
               Select up to {platform_limit} platforms that matter most to you. 
               <span className="ml-2 text-sm font-medium">
-                ({selectedPreferences.platforms.length}/{platform_limit} selected)
+                ({selectedStances.platforms.length}/{platform_limit} selected)
               </span>
             </p>
             <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
@@ -481,7 +481,7 @@ const CriteriaSelection = () => {
                 <div
                   key={`platform-${index}`}
                   className={`bg-white p-4 rounded-lg shadow-sm border cursor-pointer transition-all ${
-                    selectedPreferences.platforms.includes(platform.title)
+                    selectedStances.platforms.includes(platform.title)
                       ? "border-ph-blue ring-1 ring-ph-blue/20"
                       : "border-gray-100 hover:border-ph-blue/20"
                   }`}
@@ -490,12 +490,12 @@ const CriteriaSelection = () => {
                   <div className="flex items-start space-x-3">
                     <div
                       className={`w-5 h-5 rounded border-2 mt-0.5 flex-shrink-0 transition-colors ${
-                        selectedPreferences.platforms.includes(platform.title)
+                        selectedStances.platforms.includes(platform.title)
                           ? "bg-ph-blue border-ph-blue"
                           : "border-gray-300"
                       }`}
                     >
-                      {selectedPreferences.platforms.includes(platform.title) && (
+                      {selectedStances.platforms.includes(platform.title) && (
                         <svg
                           className="w-4 h-4 text-white"
                           fill="none"
