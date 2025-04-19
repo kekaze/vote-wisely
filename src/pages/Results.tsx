@@ -169,13 +169,13 @@ const Results = () => {
                     >
                       <div className="flex flex-col h-full">
                         <div className="flex-1">
-                          <div className="flex items-center gap-3">
-                            <h3 className="font-semibold text-gray-900 truncate">{recommendation.CandidateName}</h3>
+                          <h3 className="font-semibold text-gray-900 truncate">{recommendation.CandidateName}</h3>
+                          <div className="flex items-center gap-2">
+                            <p className="text-sm text-gray-600 truncate flex-1" title={recommendation.PoliticalParty}>{recommendation.PoliticalParty}</p>
                             <div className="bg-ph-blue/10 text-ph-blue px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap">
                               {(recommendation.Score * 100).toFixed(2)}%
                             </div>
                           </div>
-                          <p className="text-sm text-gray-600">{recommendation.PoliticalParty}</p>
                         </div>
                       </div>
                     </div>
