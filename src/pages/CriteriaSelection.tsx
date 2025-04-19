@@ -350,7 +350,6 @@ const CriteriaSelection = () => {
           return prev;
         }
       } else if (category === "is_political_dynasty" || category === "has_criminal_records") {
-        // These are handled separately in the UI
         return prev;
       } else {
         criteria[category] = (criteria[category] as string[]).includes(title)
