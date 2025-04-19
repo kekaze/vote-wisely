@@ -27,8 +27,12 @@ const criteria: Criteria[] = [
     "description": "Pag-amyenda o pagpalit sa 1987 Constitution. Usapin dito ang sistema ng gobyerno, term limits, at foreign ownership."
   },
   {
-    "title": "Sovereignty on West Philippine Sea",
+    "title": "Protection of West Philippine Sea",
     "description": "Pagtindig ng Pilipinas laban sa pag-angkin ng China sa ating karagatan."
+  },
+  {
+    "title": "POGO Ban",
+    "description": "Pagpapasara ng mga POGO sa bansa."
   },
   {
     "title": "SOGIE Equality Bill / LGBTQ+ Rights",
@@ -39,7 +43,7 @@ const criteria: Criteria[] = [
     "description": "Pagsasabatas ng diborsyo para sa mga mag-asawang hindi na magkasundo at nais nang legal na maghiwalay."
   },
   {
-    "title": "Jeepney Modernization",
+    "title": "Jeepney Phaseout",
     "description": "Pagpalit sa mga lumang jeep ng mga bago at environment-friendly na sasakyan. Isyu ang gastos at epekto sa mga tsuper."
   },
   {
@@ -47,8 +51,8 @@ const criteria: Criteria[] = [
     "description": "Pagbabalik ng sapilitang ROTC sa mga estudyante para daw sa disiplina at nasyonalismo."
   },
   {
-    "title": "Violence against Illegal Drugs",
-    "description": "Paggamit ng dahas laban sa iligal na droga."
+    "title": "War on Illegal Drugs",
+    "description": "Paglaban sa iligal na droga gamit ang dahas."
   },
   {
     "title": "Non-violent approach to illegal drugs",
@@ -129,6 +133,38 @@ const criteria: Criteria[] = [
   {
     "title": "Pension System Sustainability",
     "description": "Pagtitiyak sa pangmatagalang seguridad ng mga pondo ng pensiyon para sa mga retirado."
+  },
+  {
+    "title": "Anti-Terrorism Law",
+    "description": "Batas na naglalayong pigilan, ipagbawal, at parusahan ang terorismo"
+  },
+  {
+    "title": "TRAIN Law",
+    "description": "Batas na nagpababa ng buwis sa mga manggagawa at napataas ng buwis sa ibang produkto tulad ng sigarilyo, at matamis na inumin."
+  },
+  {
+    "title": "Legalization of medical marijuana",
+    "description": "Pag-amyenda sa batas upang maging legal ang paggamit ng marijuana para sa kalusugan."
+  },
+  {
+    "title": "Land Reclamation",
+    "description": "Proseso sa paggawa ng bagong lupa para sa mga pabahay at negosyo."
+  },
+  {
+    "title": "Abolition of NTF-ELCAC",
+    "description": "Pagbuwag sa NTF-ELCAC upang ipagpatuloy ang peace talks sa mga NPA."
+  },
+  {
+    "title": "Decriminalization of abortion",
+    "description": "Pag-amyenda sa batas upang maging legal ang abortion."
+  },
+  {
+    "title": "Impeachment of VP Sarah",
+    "description": "Ang paglitis kay VP Sarah ukol sa mga isyu ng kanyang confidential funds."
+  },
+  {
+    "title": "ABS-CBN Shutdown",
+    "description": "Pagtanggi sa prangkisa ng ABS-CBN."
   }
 ];
 
@@ -244,6 +280,38 @@ const platforms: Platform[] = [
   {
     "title": "Cost of Living / Inflation",
     "description": "Pagtugon sa tumataas na presyo ng mga pangunahing bilihin."
+  },
+  {
+    "title": "Minimum Wage Increase",
+    "description": "Pagtaas ng minimum wage para sa mga empleyado."
+  },
+  {
+    "title": "Fight against malnutrition",
+    "description": "Paglaban sa pagkalat ng malnutrisyon sa bansa."
+  },
+  {
+    "title": "E-Sports",
+    "description": "Pagpapatupad ng mga programa para sa pagpapalakas ng e-sports sa bansa."
+  },
+  {
+    "title": "Road Safety",
+    "description": "Pagpapatupad ng mga programa para sa kaligtasan sa kalsada."
+  },
+  {
+    "title": "Salary Increase for Teachers",
+    "description": "Pagtaas ng suweldo ng mga guro."
+  },
+  {
+    "title": "Decriminalization of abortion",
+    "description": "Pag-amyenda sa batas upang maging legal ang abortion."
+  },
+  {
+    "title": "Legalization of medical marijuana",
+    "description": "Pag-amyenda sa batas upang maging legal ang paggamit ng marijuana para sa kalusugan."
+  },
+  {
+    "title": "Free Education",
+    "description": "Pag-gawa ng batas at programa upang maging libre at abot-kaya ang edukasyon."
   },
 ];
 

@@ -1,10 +1,16 @@
 import { get } from "http";
 
 const checkToken = async () => {
+    if (Boolean(import.meta.env.VITE_IS_DEV)) {
+        console.log("DEV MODE");
+        return true;
+    }
+
     const response = await fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/api/v1/Auth/CheckAuth`, {
         method: 'GET',
         credentials: 'include' as RequestCredentials,
     });
+
     if (!response.ok) {
         return false;
     };
