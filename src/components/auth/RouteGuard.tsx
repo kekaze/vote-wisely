@@ -1,5 +1,6 @@
 import { useAuthStatus } from "@/hooks/use-auth-status";
 import { Navigate } from "react-router-dom";
+import LogoutButton from "./LogoutButton";
 
 const LoadingSpinner = () => <div>Loading...</div>;
 
@@ -16,7 +17,12 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
     if (isAuthenticated === null) {
         return <LoadingSpinner />;
     }
-    return isAuthenticated ? children : <Navigate to="/login" replace />;
+    return isAuthenticated ? (
+        <>
+            <LogoutButton />
+            {children}
+        </>
+    ) : <Navigate to="/login" replace />;
 };
 
 export { PublicRoute, ProtectedRoute };
