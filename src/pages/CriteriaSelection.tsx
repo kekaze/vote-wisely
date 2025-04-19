@@ -367,7 +367,7 @@ const CriteriaSelection = () => {
       .reduce((sum, [_, arr]) => sum + (arr as string[]).length, 0);
     
     if (totalSelected < 3) {
-      toast.error("Please select at least 3 Stances");
+      toast.error("Please select at least 3 stances");
       return;
     }
     
@@ -425,16 +425,13 @@ const CriteriaSelection = () => {
             </p>
           </div>
 
-          <div className="bg-white shadow rounded-lg p-6 mb-8">
-            <h2 className="text-xl font-semibold mb-4">Candidate Background</h2>
-            <p className="text-gray-600 mb-4">Please answer these questions to help us recommend the right senatorial candidates for you.</p>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-700">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div className="bg-white shadow rounded-lg p-4">
+              <div className="flex flex-col h-full">
+                <label className="block text-base font-medium text-gray-900 mb-2">
                   Do you prefer candidates who are not part of a political dynasty?
                 </label>
-                <div className="flex space-x-4">
+                <div className="flex space-x-2 mt-auto">
                   <button
                     onClick={() => setSelectedCriteria(prev => ({ ...prev, not_political_dyansty: true }))}
                     className={`px-4 py-2 rounded-md ${
@@ -457,12 +454,14 @@ const CriteriaSelection = () => {
                   </button>
                 </div>
               </div>
+            </div>
 
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-700">
+            <div className="bg-white shadow rounded-lg p-4">
+              <div className="flex flex-col h-full">
+                <label className="block text-base font-medium text-gray-900 mb-2">
                   Do you prefer candidates without a criminal record?
                 </label>
-                <div className="flex space-x-4">
+                <div className="flex space-x-2 mt-auto">
                   <button
                     onClick={() => setSelectedCriteria(prev => ({ ...prev, no_criminal_records: true }))}
                     className={`px-4 py-2 rounded-md ${
