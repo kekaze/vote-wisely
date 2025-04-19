@@ -18,7 +18,7 @@ interface SelectedCriteria {
   against: string[];
   with_reservations: string[];
   platforms: string[];
-  not_political_dyansty: boolean | null;
+  not_political_dynasty: boolean | null;
   no_criminal_records: boolean | null;
 }
 
@@ -325,7 +325,7 @@ const CriteriaSelection = () => {
     against: [],
     with_reservations: [],
     platforms: [],
-    not_political_dyansty: null,
+    not_political_dynasty: null,
     no_criminal_records: null
   });
 
@@ -349,7 +349,7 @@ const CriteriaSelection = () => {
           toast.error(`You can only select up to ${platform_limit} platforms`);
           return prev;
         }
-      } else if (category === "not_political_dyansty" || category === "no_criminal_records") {
+      } else if (category === "not_political_dynasty" || category === "no_criminal_records") {
         return prev;
       } else {
         criteria[category] = (criteria[category] as string[]).includes(title)
@@ -363,7 +363,7 @@ const CriteriaSelection = () => {
 
   const handleSubmit = () => {
     const totalSelected = Object.entries(selectedCriteria)
-      .filter(([key]) => key !== "platforms" && key !== "not_political_dyansty" && key !== "no_criminal_records")
+      .filter(([key]) => key !== "platforms" && key !== "not_political_dynasty" && key !== "no_criminal_records")
       .reduce((sum, [_, arr]) => sum + (arr as string[]).length, 0);
     
     if (totalSelected < 3) {
@@ -371,7 +371,7 @@ const CriteriaSelection = () => {
       return;
     }
     
-    if (selectedCriteria.not_political_dyansty === null || selectedCriteria.no_criminal_records === null) {
+    if (selectedCriteria.not_political_dynasty === null || selectedCriteria.no_criminal_records === null) {
       toast.error("Please answer all candidate background questions");
       return;
     }
@@ -433,9 +433,9 @@ const CriteriaSelection = () => {
                 </label>
                 <div className="flex space-x-2 mt-auto">
                   <button
-                    onClick={() => setSelectedCriteria(prev => ({ ...prev, not_political_dyansty: true }))}
+                    onClick={() => setSelectedCriteria(prev => ({ ...prev, not_political_dynasty: true }))}
                     className={`px-4 py-2 rounded-md ${
-                      selectedCriteria.not_political_dyansty === true
+                      selectedCriteria.not_political_dynasty === true
                         ? 'bg-blue-600 text-white'
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
@@ -443,9 +443,9 @@ const CriteriaSelection = () => {
                     Yes
                   </button>
                   <button
-                    onClick={() => setSelectedCriteria(prev => ({ ...prev, not_political_dyansty: false }))}
+                    onClick={() => setSelectedCriteria(prev => ({ ...prev, not_political_dynasty: false }))}
                     className={`px-4 py-2 rounded-md ${
-                      selectedCriteria.not_political_dyansty === false
+                      selectedCriteria.not_political_dynasty === false
                         ? 'bg-red-600 text-white'
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}

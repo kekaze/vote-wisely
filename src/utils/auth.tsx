@@ -1,7 +1,7 @@
 import { get } from "http";
 
 const checkToken = async () => {
-    if (Boolean(import.meta.env.VITE_IS_DEV)) {
+    if (import.meta.env.VITE_IS_DEV == 'TRUE') {
         console.log("DEV MODE");
         return true;
     }
