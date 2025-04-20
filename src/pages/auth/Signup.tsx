@@ -1,19 +1,22 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, User, Phone } from "lucide-react";
 import { toast } from "sonner";
+import AuthTabs from "@/components/auth/AuthTabs";
 
 const Signup = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [authMethod, setAuthMethod] = useState<"email" | "phone">("email");
   const [formData, setFormData] = useState({
     full_name: "",
     email: "",
+    phone: "",
     password: "",
     confirm_password: ""
-  })
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [e.target.name]: e.target.value });
@@ -26,7 +29,10 @@ const Signup = () => {
     const signupParameters = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
+      body: JSON.stringify({
+        ...formData,
+        auth_method: authMethod
+      })
     };
 
     fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/api/v1/Auth/Signup`, signupParameters)
@@ -35,7 +41,7 @@ const Signup = () => {
           const data = await response.json();
           throw new Error(data.message);
         }
-        setIsLoading(false)
+        setIsLoading(false);
       })
       .then(() => {
         navigate('/email-confirmation');
@@ -53,6 +59,8 @@ const Signup = () => {
           <div className="text-center mb-5">
             <h1 className="text-2xl font-semibold text-gray-900">Create An Account</h1>
           </div>
+
+          <AuthTabs onTabChange={setAuthMethod} />
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
@@ -74,24 +82,45 @@ const Signup = () => {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700" htmlFor="email">
-                Email
-              </label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
-                <input
-                  id="email"
-                  type="email"
-                  placeholder="Enter your email"
-                  className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-ph-blue/20 focus:border-ph-blue/20"
-                  required
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
+            {authMethod === "email" ? (
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700" htmlFor="email">
+                  Email
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
+                  <input
+                    id="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-ph-blue/20 focus:border-ph-blue/20"
+                    required
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700" htmlFor="phone">
+                  Phone Number
+                </label>
+                <div className="relative">
+                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
+                  <input
+                    id="phone"
+                    type="tel"
+                    placeholder="Enter your phone number"
+                    className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-ph-blue/20 focus:border-ph-blue/20"
+                    required
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+            )}
 
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700" htmlFor="password">
