@@ -356,7 +356,7 @@ const CriteriaSelection = () => {
           ? (criteria[category] as string[]).filter((p) => p !== title)
           : [...(criteria[category] as string[]), title];
       }
-      console.log(criteria);
+
       return criteria;
     });
   };
@@ -401,7 +401,7 @@ const CriteriaSelection = () => {
       })
       .catch (error => {
         setIsLoading(false);
-        toast.error(`Failed to process your request: ${error.message}`);
+        toast.error(`Failed to match candidates.`);
         return;
       })
   };
