@@ -62,10 +62,10 @@ const Results = () => {
     fetchResults();
   }, [reference, state_data]);
 
-  const handleShare = (platform: "facebook-feed" | "facebook-story") => {
+  // const handleShare = (platform: "facebook-feed" | "facebook-story") => {
     // In a real app, implement sharing functionality
-    toast.success(`Sharing to ${platform === "facebook-feed" ? "Facebook Feed" : "Facebook Story"}`);
-  };
+  //   toast.success(`Sharing to ${platform === "facebook-feed" ? "Facebook Feed" : "Facebook Story"}`);
+  // };
 
   if (isLoading) {
     return (
@@ -94,7 +94,7 @@ const Results = () => {
               <ArrowLeft className="h-4 w-4 mr-2 transition-transform group-hover:-translate-x-1" />
               Back to Dashboard
             </button>
-            <div className="flex gap-2">
+            {/* <div className="flex gap-2">
               <button
                 onClick={() => handleShare("facebook-feed")}
                 className="flex items-center px-3 py-2 text-sm bg-[#1877F2] text-white rounded hover:bg-[#1877F2]/90 transition-colors"
@@ -109,7 +109,7 @@ const Results = () => {
                 <Share2 className="h-4 w-4 mr-2" />
                 Share to Story
               </button>
-            </div>
+            </div> */}
           </div>
 
           <div className="grid grid-cols-12 gap-6">
