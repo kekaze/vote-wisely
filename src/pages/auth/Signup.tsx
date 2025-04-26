@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
 import { toast } from "sonner";
+import HCaptcha from '@hcaptcha/react-hcaptcha'
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -12,8 +13,11 @@ const Signup = () => {
     full_name: "",
     email: "",
     password: "",
-    confirm_password: ""
+    confirm_password: "",
+    captcha_token: ""
   })
+
+  const captcha = useRef<HCaptcha>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [e.target.name]: e.target.value });
@@ -38,9 +42,11 @@ const Signup = () => {
         setIsLoading(false)
       })
       .then(() => {
+        captcha.current?.resetCaptcha();
         navigate('/email-confirmation');
       })
       .catch((error) => {
+        captcha.current?.resetCaptcha();
         setIsLoading(false);
         toast.error(error.message);
       });
@@ -152,7 +158,13 @@ const Signup = () => {
                 </button>
               </div>
             </div>
-
+            <HCaptcha
+              ref={captcha}
+              sitekey="your-sitekey"
+              onVerify={(token) => {
+                setFormData(prev => ({...prev, captcha_token: token}));
+              }}
+            />
             <button
               type="submit"
               disabled={isLoading}
