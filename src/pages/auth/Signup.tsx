@@ -35,6 +35,8 @@ const Signup = () => {
 
     fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/api/v1/Auth/Signup`, signupParameters)
       .then(async response => {
+        captcha.current?.resetCaptcha();
+
         if(!response.ok) {
           const data = await response.json();
           throw new Error(data.message);
@@ -42,11 +44,9 @@ const Signup = () => {
         setIsLoading(false)
       })
       .then(() => {
-        captcha.current?.resetCaptcha();
         navigate('/email-confirmation');
       })
       .catch((error) => {
-        captcha.current?.resetCaptcha();
         setIsLoading(false);
         toast.error(error.message);
       });
@@ -158,13 +158,15 @@ const Signup = () => {
                 </button>
               </div>
             </div>
-            <HCaptcha
-              ref={captcha}
-              sitekey="your-sitekey"
-              onVerify={(token) => {
-                setFormData(prev => ({...prev, captcha_token: token}));
-              }}
-            />
+            <div className="container ml-2">
+              <HCaptcha
+                ref={captcha}
+                sitekey="your-sitekey"
+                onVerify={(token) => {
+                  setFormData(prev => ({...prev, captcha_token: token}));
+                }}
+              />
+            </div>
             <button
               type="submit"
               disabled={isLoading}

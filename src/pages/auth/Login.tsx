@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { toast } from "sonner";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -9,8 +10,11 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
+    captcha_token: ""
   })
+  
+  const captcha = useRef<HCaptcha>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [e.target.name]: e.target.value });
@@ -29,6 +33,8 @@ const Login = () => {
 
     fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/api/v1/Auth/Login`, loginParameters)
       .then(async response => {
+        captcha.current?.resetCaptcha();
+
         if(!response.ok) {
           const data = await response.json();
           throw new Error(data.message);
@@ -100,6 +106,15 @@ const Login = () => {
                   )}
                 </button>
               </div>
+            </div>
+            <div className="container ml-2">
+              <HCaptcha
+                ref={captcha}
+                sitekey="your-sitekey"
+                onVerify={(token) => {
+                  setFormData(prev => ({...prev, captcha_token: token}));
+                }}
+              />
             </div>
 
             <button
