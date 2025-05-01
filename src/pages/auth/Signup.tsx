@@ -161,7 +161,7 @@ const Signup = () => {
             <div className="container ml-2">
               <HCaptcha
                 ref={captcha}
-                sitekey="your-sitekey"
+                sitekey={import.meta.env.VITE_CAPTCHA_SITE_KEY}
                 onVerify={(token) => {
                   setFormData(prev => ({...prev, captcha_token: token}));
                 }}
