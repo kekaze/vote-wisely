@@ -11,7 +11,8 @@ const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    captcha_token: ""
+    captcha_token: "",
+    username: ""
   })
   
   const captcha = useRef<HCaptcha>(null);
@@ -22,6 +23,12 @@ const Login = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (formData.username) {
+      console.log('Bot detected');
+      return;
+    }
+    
     setIsLoading(true);
 
     const loginParameters = {
@@ -59,6 +66,16 @@ const Login = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="absolute opacity-0 pointer-events-none -z-10">
+              <input
+                type="text"
+                name="username"
+                tabIndex={-1}
+                autoComplete="off"
+                value={formData.username}
+                onChange={handleChange}
+              />
+            </div>
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700" htmlFor="email">
                 Email
