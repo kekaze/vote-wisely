@@ -8,9 +8,9 @@ const Dashboard = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 mb-6 animate-fade-in">
-            <h1 className="text-2xl font-semibold text-gray-900 mb-2">Welcome to Senate Matcher</h1>
+            <h1 className="text-2xl font-semibold text-gray-900 mb-2">Welcome to Vote Your Values</h1>
             <p className="text-gray-600">
-              Find the senatorial candidates that best match your political preferences.
+              Find the political candidates that best match your political stances and criteria.
             </p>
           </div>
 
@@ -26,7 +26,7 @@ const Dashboard = () => {
                 <div>
                   <h2 className="text-lg font-semibold text-gray-900 mb-2">Get Recommendations</h2>
                   <p className="text-gray-600">
-                    Select your senatorial candidate criteria and get recommendations.
+                    Select your political candidate criteria, and stances, then get recommendations.
                   </p>
                 </div>
               </div>
