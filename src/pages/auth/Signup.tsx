@@ -51,7 +51,7 @@ const Signup = () => {
         setIsLoading(false)
       })
       .then(() => {
-        navigate('/email-confirmation');
+        navigate('/login');
       })
       .catch((error) => {
         setIsLoading(false);
